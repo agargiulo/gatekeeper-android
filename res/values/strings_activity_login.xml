@@ -1,0 +1,12 @@
+<resources>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">CSH Username</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in_register">Log in</string>
+    <string name="action_sign_in_short">Log in</string>
+    <string name="login_progress_signing_in">Logging in&#8230;</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+
+</resources>
