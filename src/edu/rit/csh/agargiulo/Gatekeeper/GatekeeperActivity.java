@@ -128,18 +128,32 @@ public class GatekeeperActivity extends FragmentActivity
 
 	}
 
-	private void login ()
-	{
-		startActivityForResult(new Intent(this, LoginActivity.class), 0);
-		loggedin = true;
-		SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-		String username = prefs.getString("username", "username");
-		Log.d("gatekeeper", username);
-	}
-
 	private void logout ()
 	{
 		loggedin = false;
+		SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+		SharedPreferences.Editor prefsEditor = prefs.edit();
+		prefsEditor.remove("username");
+		prefsEditor.remove("password");
+		prefsEditor.commit();
+		invalidateOptionsMenu();
+	}
+
+	@Override
+	protected void onActivityResult (int requestCode, int resultCode,
+			Intent data)
+	{
+		loggedin = true;
+		SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+		String username = prefs.getString("username", "CSHUsername");
+		if(username.equals("CSHUsername"))
+		{
+			Log.e("Gatekeeper",
+					"LoginActivity.onActivityResults: Invalid username");
+		}
+		Log.d("gatekeeper", username);
+		invalidateOptionsMenu();
+
 	}
 
 	@Override
@@ -173,7 +187,8 @@ public class GatekeeperActivity extends FragmentActivity
 		switch(item.getItemId())
 		{
 		case R.id.menu_login:
-			login();
+			// login();
+			startActivityForResult(new Intent(this, LoginActivity.class), 0);
 			return true;
 		case R.id.menu_logout:
 			logout();

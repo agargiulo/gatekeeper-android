@@ -16,8 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
- * Activity which displays a login screen to the user, offering registration as
- * well.
+ * Activity which displays a login screen to the user
  */
 public class LoginActivity extends Activity
 {
@@ -124,6 +123,12 @@ public class LoginActivity extends Activity
 		super.onCreateOptionsMenu(menu);
 		getMenuInflater().inflate(R.menu.activity_login, menu);
 		return true;
+	}
+
+	@Override
+	public void onStop ()
+	{
+		super.onStop();
 	}
 
 	/**
