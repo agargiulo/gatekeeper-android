@@ -20,12 +20,14 @@ import android.widget.TextView;
  */
 public class LoginActivity extends Activity
 {
+	public static final String PREFS_NAME = "GatekeeperPrefsFile";
+
 	// Values for email and password at the time of the login attempt.
-	private String mEmail;
+	private String mUsername;
 	private String mPassword;
 
 	// UI references.
-	private EditText mEmailView;
+	private EditText mUsernameView;
 	private EditText mPasswordView;
 	private View mLoginFormView;
 	private View mLoginStatusView;
@@ -40,29 +42,29 @@ public class LoginActivity extends Activity
 	public void attemptLogin ()
 	{
 		// Reset errors.
-		mEmailView.setError(null);
+		mUsernameView.setError(null);
 		mPasswordView.setError(null);
 
 		// Store values at the time of the login attempt.
-		mEmail = mEmailView.getText().toString();
+		mUsername = mUsernameView.getText().toString();
 		mPassword = mPasswordView.getText().toString();
 
 		boolean cancel = false;
 		View focusView = null;
+
+		// Check for a valid email address.
+		if(TextUtils.isEmpty(mUsername))
+		{
+			mUsernameView.setError(getString(R.string.error_field_required));
+			focusView = mUsernameView;
+			cancel = true;
+		}
 
 		// Check for a valid password.
 		if(TextUtils.isEmpty(mPassword))
 		{
 			mPasswordView.setError(getString(R.string.error_field_required));
 			focusView = mPasswordView;
-			cancel = true;
-		}
-
-		// Check for a valid email address.
-		if(TextUtils.isEmpty(mEmail))
-		{
-			mEmailView.setError(getString(R.string.error_field_required));
-			focusView = mEmailView;
 			cancel = true;
 		}
 
@@ -88,38 +90,13 @@ public class LoginActivity extends Activity
 		setContentView(R.layout.activity_login);
 
 		// Set up the login form.
-		mEmailView = (EditText) findViewById(R.id.email);
+		mUsernameView = (EditText) findViewById(R.id.username);
 
 		mPasswordView = (EditText) findViewById(R.id.password);
-		mPasswordView
-				.setOnEditorActionListener(new TextView.OnEditorActionListener()
-				{
-					@Override
-					public boolean onEditorAction (TextView textView, int id,
-							KeyEvent keyEvent)
-					{
-						if(id == R.id.login || id == EditorInfo.IME_NULL)
-						{
-							attemptLogin();
-							return true;
-						}
-						return false;
-					}
-				});
-
 		mLoginFormView = findViewById(R.id.login_form);
 		mLoginStatusView = findViewById(R.id.login_status);
 		mLoginStatusMessageView = (TextView) findViewById(R.id.login_status_message);
 
-		findViewById(R.id.sign_in_button).setOnClickListener(
-				new View.OnClickListener()
-				{
-					@Override
-					public void onClick (View view)
-					{
-						attemptLogin();
-					}
-				});
 	}
 
 	@Override
