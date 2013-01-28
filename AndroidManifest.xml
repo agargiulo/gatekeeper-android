@@ -20,7 +20,7 @@
             android:windowSoftInputMode="adjustResize|stateVisible" >
         </activity>
         <activity
-            android:name="edu.rit.csh.agargiulo.Gatekeeper.MainActivity"
+            android:name="edu.rit.csh.agargiulo.Gatekeeper.GatekeeperActivity"
             android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
