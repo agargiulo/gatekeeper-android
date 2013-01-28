@@ -3,12 +3,14 @@ package edu.rit.csh.agargiulo.Gatekeeper;
 import java.util.Locale;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -101,6 +103,8 @@ public class GatekeeperActivity extends FragmentActivity
 		}
 	}
 
+	public static final String PREFS_NAME = "GatekeeperPrefsFile";
+
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
 	 * fragments for each of the sections. We use a
@@ -126,13 +130,16 @@ public class GatekeeperActivity extends FragmentActivity
 
 	private void login ()
 	{
-		startActivity(new Intent(this, LoginActivity.class));
+		startActivityForResult(new Intent(this, LoginActivity.class), 0);
 		loggedin = true;
+		SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+		String username = prefs.getString("username", "username");
+		Log.d("gatekeeper", username);
 	}
 
 	private void logout ()
 	{
-		loggedin = true;
+		loggedin = false;
 	}
 
 	@Override

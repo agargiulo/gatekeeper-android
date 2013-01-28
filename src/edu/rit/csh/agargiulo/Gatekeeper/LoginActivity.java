@@ -4,15 +4,16 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.KeyEvent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Activity which displays a login screen to the user, offering registration as
@@ -39,8 +40,9 @@ public class LoginActivity extends Activity
 	 * form errors (missing fields, etc.), the errors are presented and no
 	 * actual login attempt is made.
 	 */
-	public void attemptLogin ()
+	public void attemptLogin (View view)
 	{
+
 		// Reset errors.
 		mUsernameView.setError(null);
 		mPasswordView.setError(null);
@@ -78,7 +80,24 @@ public class LoginActivity extends Activity
 			// Show a progress spinner, and kick off a background task to
 			// perform the user login attempt.
 			mLoginStatusMessageView.setText(R.string.login_progress_signing_in);
+
+			// Simulate logging in, because all I have to do is store the
+			// credentials in the SharedPreferances
 			showProgress(true);
+			Toast.makeText(getApplicationContext(),
+					"Logged in as user: " + mUsername, Toast.LENGTH_SHORT)
+					.show();
+			Log.d(this.getClass().toString() + " attemptLogin()", "user: "
+					+ mUsername);
+
+			SharedPreferences settings = getSharedPreferences(PREFS_NAME,
+					MODE_PRIVATE);
+			SharedPreferences.Editor editor = settings.edit();
+			editor.putString("username", mUsername);
+			editor.putString("password", mPassword);
+			editor.commit();
+			showProgress(false);
+			this.finish();
 		}
 	}
 
