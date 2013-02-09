@@ -122,12 +122,6 @@ public class GatekeeperActivity extends FragmentActivity
 
 	private boolean loggedin = false;
 
-	private void displayAbout ()
-	{
-		// TODO Auto-generated method stub
-
-	}
-
 	private void logout ()
 	{
 		loggedin = false;
@@ -194,7 +188,7 @@ public class GatekeeperActivity extends FragmentActivity
 			logout();
 			return true;
 		case R.id.menu_about:
-			displayAbout();
+			startActivity(new Intent(this, AboutActivity.class));
 			return true;
 		case R.id.menu_settings:
 			openSettings();
