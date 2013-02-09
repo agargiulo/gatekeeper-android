@@ -3,13 +3,13 @@
     <item
         android:id="@+id/menu_settings"
         android:orderInCategory="100"
-        android:showAsAction="ifRoom"
+        android:showAsAction="always"
         android:title="@string/menu_settings"/>
     <item
         android:id="@+id/menu_login"
         android:checkable="false"
         android:enabled="true"
-        android:showAsAction="ifRoom"
+        android:showAsAction="always"
         android:title="@string/menu_login"
         android:visible="true">
     </item>
