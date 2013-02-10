@@ -90,9 +90,8 @@ public class LoginActivity extends Activity
 			SharedPreferences settings = getSharedPreferences(PREFS_NAME,
 					MODE_PRIVATE);
 			SharedPreferences.Editor editor = settings.edit();
-			editor.putString("username", mUsername);
-			editor.putString("password", mPassword);
-			editor.commit();
+			editor.putString("username", mUsername)
+					.putString("password", mPassword).commit();
 			Toast.makeText(getApplicationContext(),
 					"Logged in as user: " + mUsername, Toast.LENGTH_SHORT)
 					.show();

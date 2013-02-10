@@ -20,9 +20,7 @@ public class GatekeeperActivity extends FragmentActivity
 		loggedin = false;
 		SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 		SharedPreferences.Editor prefsEditor = prefs.edit();
-		prefsEditor.remove("username");
-		prefsEditor.remove("password");
-		prefsEditor.commit();
+		prefsEditor.remove("username").remove("password").commit();
 		invalidateOptionsMenu();
 	}
 
@@ -32,8 +30,8 @@ public class GatekeeperActivity extends FragmentActivity
 	{
 		loggedin = true;
 		SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-		String username = prefs.getString("username", null);
-		if(username == null)
+		String username = prefs.getString("username", "");
+		if(username == "")
 		{
 			Log.e("Gatekeeper",
 					"LoginActivity.onActivityResults: Invalid username");
