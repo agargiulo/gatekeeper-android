@@ -32,8 +32,8 @@ public class GatekeeperActivity extends FragmentActivity
 	{
 		loggedin = true;
 		SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-		String username = prefs.getString("username", "CSHUsername");
-		if(username.equals("CSHUsername"))
+		String username = prefs.getString("username", null);
+		if(username == null)
 		{
 			Log.e("Gatekeeper",
 					"LoginActivity.onActivityResults: Invalid username");
@@ -93,6 +93,11 @@ public class GatekeeperActivity extends FragmentActivity
 			menu.findItem(R.id.menu_login).setVisible(true);
 		}
 		return result;
+	}
+
+	public void update (String s)
+	{
+		Log.d("GatekeeperActivity.update(s): ", s);
 	}
 
 }
