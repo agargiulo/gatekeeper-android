@@ -83,9 +83,7 @@ public class LoginActivity extends Activity
 			// Simulate logging in, because all I have to do is store the
 			// credentials in the SharedPreferances
 			showProgress(true);
-			Toast.makeText(getApplicationContext(),
-					"Logged in as user: " + mUsername, Toast.LENGTH_SHORT)
-					.show();
+
 			Log.d(this.getClass().toString() + " attemptLogin()", "user: "
 					+ mUsername);
 
@@ -95,7 +93,11 @@ public class LoginActivity extends Activity
 			editor.putString("username", mUsername);
 			editor.putString("password", mPassword);
 			editor.commit();
+			Toast.makeText(getApplicationContext(),
+					"Logged in as user: " + mUsername, Toast.LENGTH_SHORT)
+					.show();
 			showProgress(false);
+			setResult(RESULT_CANCELED);
 			this.finish();
 		}
 	}
