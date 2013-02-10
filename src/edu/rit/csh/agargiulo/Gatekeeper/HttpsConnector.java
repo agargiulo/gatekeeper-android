@@ -45,39 +45,73 @@ public class HttpsConnector
 		this.context = context;
 		client = new HttpsClient(this.context);
 		prefs = PreferenceManager.getDefaultSharedPreferences(context);
-		usernameNvp = new BasicNameValuePair("username", prefs.getString(
-				"username", ""));
-		passwordNvp = new BasicNameValuePair("password", prefs.getString(
-				"password", ""));
+		usernameNvp = new BasicNameValuePair("username", prefs.getString("username", ""));
+		passwordNvp = new BasicNameValuePair("password", prefs.getString("password", ""));
 
 	}
 
 	private URI createUrl (String path)
 	{
-		URI post_uri;
+		URI postUri;
 		try
 		{
-			post_uri = URIUtils.createURI("https", POST_HOST, 0, path, null,
-					null);
+			postUri = URIUtils.createURI("https", POST_HOST, 0, path, null, null);
 		} catch(URISyntaxException e)
 		{
-			Log.e(this.getClass().toString() + "URISyntaxException",
-					e.getMessage(), e);
-			post_uri = null;
+			Log.e(this.getClass().toString() + "URISyntaxException", e.getMessage(), e);
+			postUri = null;
 		}
-		return post_uri;
+		return postUri;
 
 	}
 
 	/**
 	 * Gets all of the doors
 	 */
-	public void getDoors ()
+	public void getAllDoors ()
 	{
-		URI doors_url = createUrl("all_doors");
-		BasicNameValuePair urlNvp = new BasicNameValuePair("url",
-				doors_url.toString());
-		new HttpsPostAsyncTask(new HttpsClient(context), activity).execute(
-				urlNvp, usernameNvp, passwordNvp);
+		URI doorsUrl = createUrl("all_doors");
+		BasicNameValuePair urlNvp = new BasicNameValuePair("url", doorsUrl.toString());
+		new HttpsPostAsyncTask(client, activity).execute(urlNvp, usernameNvp, passwordNvp);
+	}
+
+	/**
+	 * Get the state for a given Door ID
+	 */
+	public void getDoorState (int doorId)
+	{
+		URI stateUrl = createUrl("door_state/" + doorId);
+		BasicNameValuePair urlNvp = new BasicNameValuePair("url", stateUrl.toString());
+		new HttpsPostAsyncTask(client, activity).execute(urlNvp, usernameNvp, passwordNvp);
+	}
+
+	/**
+	 * Lock the given door
+	 */
+	public void lockDoor (int doorId)
+	{
+		URI lockUrl = createUrl("lock/" + doorId);
+		BasicNameValuePair urlNvp = new BasicNameValuePair("url", lockUrl.toString());
+		new HttpsPostAsyncTask(client, activity).execute(urlNvp, usernameNvp, passwordNvp);
+	}
+
+	/**
+	 * Pop the lock on the given door.
+	 */
+	public void popDoor (int doorId)
+	{
+		URI popUrl = createUrl("pop/" + doorId);
+		BasicNameValuePair urlNvp = new BasicNameValuePair("url", popUrl.toString());
+		new HttpsPostAsyncTask(client, activity).execute(urlNvp, usernameNvp, passwordNvp);
+	}
+
+	/**
+	 * Unlock the given door
+	 */
+	public void unlockDoor (int doorId)
+	{
+		URI unlockUrl = createUrl("unlock/" + doorId);
+		BasicNameValuePair urlNvp = new BasicNameValuePair("url", unlockUrl.toString());
+		new HttpsPostAsyncTask(client, activity).execute(urlNvp, usernameNvp, passwordNvp);
 	}
 }
