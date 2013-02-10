@@ -73,9 +73,6 @@ public class GatekeeperActivity extends FragmentActivity
 		case R.id.menu_about:
 			startActivity(new Intent(this, AboutActivity.class));
 			return true;
-		case R.id.menu_settings:
-			openSettings();
-			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 
@@ -96,12 +93,6 @@ public class GatekeeperActivity extends FragmentActivity
 			menu.findItem(R.id.menu_login).setVisible(true);
 		}
 		return result;
-	}
-
-	private void openSettings ()
-	{
-		// TODO Auto-generated method stub
-
 	}
 
 }
