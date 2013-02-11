@@ -16,7 +16,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
- * Activity which displays a login screen to the user
+ * @author Anthony Gargiulo <anthony@agargiulo.com>
+ * 
+ *         Activity which displays a login screen to the user
  */
 public class LoginActivity extends Activity
 {
@@ -84,17 +86,13 @@ public class LoginActivity extends Activity
 			// credentials in the SharedPreferances
 			showProgress(true);
 
-			Log.d(this.getClass().toString() + " attemptLogin()", "user: "
-					+ mUsername);
+			Log.d(this.getClass().toString() + " attemptLogin()", "user: " + mUsername);
 
-			SharedPreferences settings = getSharedPreferences(PREFS_NAME,
-					MODE_PRIVATE);
+			SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 			SharedPreferences.Editor editor = settings.edit();
-			editor.putString("username", mUsername)
-					.putString("password", mPassword).commit();
-			Toast.makeText(getApplicationContext(),
-					"Logged in as user: " + mUsername, Toast.LENGTH_SHORT)
-					.show();
+			editor.putString("username", mUsername).putString("password", mPassword).commit();
+			Toast.makeText(getApplicationContext(), "Logged in as user: " + mUsername,
+					Toast.LENGTH_SHORT).show();
 			showProgress(false);
 			setResult(RESULT_CANCELED);
 			this.finish();
@@ -143,32 +141,27 @@ public class LoginActivity extends Activity
 		// the progress spinner.
 		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2)
 		{
-			int shortAnimTime = getResources().getInteger(
-					android.R.integer.config_shortAnimTime);
+			int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 
 			mLoginStatusView.setVisibility(View.VISIBLE);
-			mLoginStatusView.animate().setDuration(shortAnimTime)
-					.alpha(show ? 1 : 0)
+			mLoginStatusView.animate().setDuration(shortAnimTime).alpha(show ? 1 : 0)
 					.setListener(new AnimatorListenerAdapter()
 					{
 						@Override
 						public void onAnimationEnd (Animator animation)
 						{
-							mLoginStatusView.setVisibility(show ? View.VISIBLE
-									: View.GONE);
+							mLoginStatusView.setVisibility(show ? View.VISIBLE : View.GONE);
 						}
 					});
 
 			mLoginFormView.setVisibility(View.VISIBLE);
-			mLoginFormView.animate().setDuration(shortAnimTime)
-					.alpha(show ? 0 : 1)
+			mLoginFormView.animate().setDuration(shortAnimTime).alpha(show ? 0 : 1)
 					.setListener(new AnimatorListenerAdapter()
 					{
 						@Override
 						public void onAnimationEnd (Animator animation)
 						{
-							mLoginFormView.setVisibility(show ? View.GONE
-									: View.VISIBLE);
+							mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
 						}
 					});
 		} else

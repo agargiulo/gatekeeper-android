@@ -69,8 +69,7 @@ public class HttpsClient extends DefaultHttpClient
 		try
 		{
 			trustedKeys = KeyStore.getInstance("BKS");
-			InputStream input = context.getResources().openRawResource(
-					R.raw.keystore);
+			InputStream input = context.getResources().openRawResource(R.raw.keystore);
 			trustedKeys.load(input, "mysecret".toCharArray());
 			input.close();
 			sslSf = new SSLSocketFactory(trustedKeys);
@@ -78,28 +77,22 @@ public class HttpsClient extends DefaultHttpClient
 			return sslSf;
 		} catch(KeyStoreException kse)
 		{
-			Log.e(this.getClass().toString() + " newSSLSocketFactory",
-					kse.getMessage(), kse);
+			Log.e(this.getClass().toString() + " newSSLSocketFactory", kse.getMessage(), kse);
 		} catch(NoSuchAlgorithmException nsae)
 		{
-			Log.e(this.getClass().toString() + " NoSuchAlgorithmException",
-					nsae.getMessage(), nsae);
+			Log.e(this.getClass().toString() + " NoSuchAlgorithmException", nsae.getMessage(), nsae);
 		} catch(CertificateException ce)
 		{
-			Log.e(this.getClass().toString() + " CertificateException",
-					ce.getMessage(), ce);
+			Log.e(this.getClass().toString() + " CertificateException", ce.getMessage(), ce);
 		} catch(IOException ioe)
 		{
-			Log.e(this.getClass().toString() + " IOException",
-					ioe.getMessage(), ioe);
+			Log.e(this.getClass().toString() + " IOException", ioe.getMessage(), ioe);
 		} catch(KeyManagementException kme)
 		{
-			Log.e(this.getClass().toString() + " KeyManagementException",
-					kme.getMessage(), kme);
+			Log.e(this.getClass().toString() + " KeyManagementException", kme.getMessage(), kme);
 		} catch(UnrecoverableKeyException uke)
 		{
-			Log.e(this.getClass().toString() + " UnrecoverableKeyException",
-					uke.getMessage(), uke);
+			Log.e(this.getClass().toString() + " UnrecoverableKeyException", uke.getMessage(), uke);
 		}
 		return null;
 	}

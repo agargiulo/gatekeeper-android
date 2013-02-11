@@ -16,7 +16,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 /**
- * @author agargiulo
+ * @author Anthony Gargiulo <anthony@agargiulo.com>
  * 
  */
 public class HttpsConnector

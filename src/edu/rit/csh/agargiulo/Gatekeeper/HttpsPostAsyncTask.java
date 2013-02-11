@@ -25,8 +25,7 @@ import android.util.Log;
  * @author Anthony Gargiulo <anthony@agargiulo.com>
  * 
  */
-public class HttpsPostAsyncTask extends
-		AsyncTask<BasicNameValuePair, Integer, String>
+public class HttpsPostAsyncTask extends AsyncTask<BasicNameValuePair, Integer, String>
 {
 	private HttpsClient gatekeeperClient;
 	private Activity activity;
@@ -61,15 +60,13 @@ public class HttpsPostAsyncTask extends
 
 			for(BasicNameValuePair nvp : args)
 			{
-				argPairs.add(new BasicNameValuePair(nvp.getName(), nvp
-						.getValue()));
+				argPairs.add(new BasicNameValuePair(nvp.getName(), nvp.getValue()));
 			}
 
 			request.setEntity(new UrlEncodedFormEntity(argPairs));
 
 			response = gatekeeperClient.execute(request);
-			bufReader = new BufferedReader(new InputStreamReader(response
-					.getEntity().getContent()));
+			bufReader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 
 			while( (line = bufReader.readLine()) != null)
 			{

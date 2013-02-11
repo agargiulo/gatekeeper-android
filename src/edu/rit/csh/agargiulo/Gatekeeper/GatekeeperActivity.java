@@ -8,6 +8,10 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+/**
+ * @author Anthony Gargiulo <anthony@agargiulo.com>
+ * 
+ */
 public class GatekeeperActivity extends FragmentActivity
 {
 
@@ -25,16 +29,14 @@ public class GatekeeperActivity extends FragmentActivity
 	}
 
 	@Override
-	protected void onActivityResult (int requestCode, int resultCode,
-			Intent data)
+	protected void onActivityResult (int requestCode, int resultCode, Intent data)
 	{
 		loggedin = true;
 		SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 		String username = prefs.getString("username", "");
 		if(username == "")
 		{
-			Log.e("Gatekeeper",
-					"LoginActivity.onActivityResults: Invalid username");
+			Log.e("Gatekeeper", "LoginActivity.onActivityResults: Invalid username");
 		}
 		Log.d("gatekeeper", username);
 		invalidateOptionsMenu();
