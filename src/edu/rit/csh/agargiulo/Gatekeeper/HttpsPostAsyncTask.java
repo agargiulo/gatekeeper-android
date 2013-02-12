@@ -61,6 +61,10 @@ public class HttpsPostAsyncTask extends AsyncTask<BasicNameValuePair, Integer, S
 			for(BasicNameValuePair nvp : args)
 			{
 				argPairs.add(new BasicNameValuePair(nvp.getName(), nvp.getValue()));
+				if(!nvp.getName().equals("password"))
+				{
+					Log.d("postasync", nvp.toString());
+				}
 			}
 
 			request.setEntity(new UrlEncodedFormEntity(argPairs));
@@ -94,16 +98,16 @@ public class HttpsPostAsyncTask extends AsyncTask<BasicNameValuePair, Integer, S
 	}
 
 	@Override
-	protected void onPostExecute (String s)
+	protected void onPostExecute (String json)
 	{
-		super.onPostExecute(s);
+		super.onPostExecute(json);
 		if(progress.isShowing())
 		{
 			progress.cancel();
 		}
 		if(activity != null)
 		{
-			((GatekeeperActivity) activity).update(s);
+			((GatekeeperActivity) activity).update(json);
 		}
 	}
 

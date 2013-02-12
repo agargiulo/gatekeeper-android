@@ -73,7 +73,7 @@ public class HttpsClient extends DefaultHttpClient
 			trustedKeys.load(input, "mysecret".toCharArray());
 			input.close();
 			sslSf = new SSLSocketFactory(trustedKeys);
-			sslSf.setHostnameVerifier(SSLSocketFactory.STRICT_HOSTNAME_VERIFIER);
+			sslSf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
 			return sslSf;
 		} catch(KeyStoreException kse)
 		{
