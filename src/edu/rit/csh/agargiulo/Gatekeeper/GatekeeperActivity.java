@@ -3,6 +3,7 @@ package edu.rit.csh.agargiulo.Gatekeeper;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -15,31 +16,37 @@ import android.view.MenuItem;
 public class GatekeeperActivity extends FragmentActivity
 {
 
-	public static final String PREFS_NAME = "GatekeeperPrefsFile";
+	private HttpsConnector connector;
 
-	private boolean loggedin = false;
-
+	/**
+	 * Deletes the stored username and password from the preferences effectivly
+	 * logging out of the app
+	 */
 	private void logout ()
 	{
-		loggedin = false;
-		SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-		SharedPreferences.Editor prefsEditor = prefs.edit();
-		prefsEditor.remove("username").remove("password").commit();
+		// This is possible because awesomeness
+		PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit()
+				.remove("username").remove("password").remove("loggedin").commit();
 		invalidateOptionsMenu();
 	}
 
 	@Override
 	protected void onActivityResult (int requestCode, int resultCode, Intent data)
 	{
-		loggedin = true;
-		SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+		SharedPreferences prefs = PreferenceManager
+				.getDefaultSharedPreferences(getApplicationContext());
 		String username = prefs.getString("username", "");
 		if(username == "")
 		{
 			Log.e("Gatekeeper", "LoginActivity.onActivityResults: Invalid username");
+			PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit()
+					.remove("loggedin").commit();
+		} else
+		{
+			Log.d("gatekeeper", username);
+			invalidateOptionsMenu();
+			connector.popDoor(4);
 		}
-		Log.d("gatekeeper", username);
-		invalidateOptionsMenu();
 
 	}
 
@@ -48,6 +55,12 @@ public class GatekeeperActivity extends FragmentActivity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		connector = new HttpsConnector(this);
+		if(!PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(
+				"loggedin", false))
+		{
+			startActivity(new Intent(this, LoginActivity.class));
+		}
 	}
 
 	@Override
@@ -83,7 +96,8 @@ public class GatekeeperActivity extends FragmentActivity
 	public boolean onPrepareOptionsMenu (Menu menu)
 	{
 		boolean result = super.onPrepareOptionsMenu(menu);
-		if(loggedin)
+		if(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean(
+				"loggedin", false))
 		{
 			menu.findItem(R.id.menu_login).setVisible(false);
 			menu.findItem(R.id.menu_logout).setVisible(true);
@@ -95,9 +109,9 @@ public class GatekeeperActivity extends FragmentActivity
 		return result;
 	}
 
-	public void update (String s)
+	public void update (String json)
 	{
-		Log.d("GatekeeperActivity.update(s): ", s);
+		Log.d("GatekeeperActivity.update(s): ", json);
 	}
 
 }

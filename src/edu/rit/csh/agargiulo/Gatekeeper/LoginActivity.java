@@ -4,9 +4,9 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -22,8 +22,6 @@ import android.widget.Toast;
  */
 public class LoginActivity extends Activity
 {
-	public static final String PREFS_NAME = "GatekeeperPrefsFile";
-
 	// Values for email and password at the time of the login attempt.
 	private String mUsername;
 	private String mPassword;
@@ -88,13 +86,12 @@ public class LoginActivity extends Activity
 
 			Log.d(this.getClass().toString() + " attemptLogin()", "user: " + mUsername);
 
-			SharedPreferences settings = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-			SharedPreferences.Editor editor = settings.edit();
-			editor.putString("username", mUsername).putString("password", mPassword).commit();
+			PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit()
+					.putString("username", mUsername).putString("password", mPassword)
+					.putBoolean("loggedin", true).commit();
 			Toast.makeText(getApplicationContext(), "Logged in as user: " + mUsername,
 					Toast.LENGTH_SHORT).show();
 			showProgress(false);
-			setResult(RESULT_CANCELED);
 			this.finish();
 		}
 	}
