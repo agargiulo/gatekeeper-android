@@ -34,6 +34,10 @@ public class GatekeeperActivity extends Activity
 			{
 			case DialogInterface.BUTTON_POSITIVE:
 				startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+			case DialogInterface.BUTTON_NEGATIVE:
+				resetView();
+			case DialogInterface.BUTTON_NEUTRAL:
+				logout();
 			default:
 				break;
 			}
@@ -41,8 +45,10 @@ public class GatekeeperActivity extends Activity
 
 	}
 
-	private HttpsConnector connector;
+	private static final int FIRST_DOOR = 4;
+	private static final int LAST_DOOR = 9;
 
+	private HttpsConnector connector;
 	private SharedPreferences prefs;
 
 	private int getColorFromState (String doorState)
@@ -103,6 +109,7 @@ public class GatekeeperActivity extends Activity
 		prefs.edit().remove("username").remove("password").remove("loggedin").commit();
 		invalidateOptionsMenu();
 		Log.d("logout", "logged out user");
+		resetView();
 	}
 
 	@Override
@@ -119,6 +126,7 @@ public class GatekeeperActivity extends Activity
 		{
 			Log.d("gatekeeper", username);
 			invalidateOptionsMenu();
+			connector.getAllDoors();
 		}
 
 	}
@@ -128,13 +136,13 @@ public class GatekeeperActivity extends Activity
 	{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
 		connector = new HttpsConnector(this);
 		prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		if(!prefs.getBoolean("loggedin", false))
 		{
 			startActivityForResult(new Intent(this, LoginActivity.class), 0);
 		}
-		connector.getAllDoors();
 	}
 
 	@Override
@@ -187,6 +195,17 @@ public class GatekeeperActivity extends Activity
 		int doorId;
 		switch(view.getId())
 		{
+		/*
+		case R.id.door_1:
+			doorId = 1;
+			break;
+		case R.id.door_2:
+			doorId = 2;
+			break;
+		case R.id.door_3:
+			doorId = 3;
+			break;
+		*/
 		case R.id.door_4:
 			doorId = 4;
 			break;
@@ -210,6 +229,17 @@ public class GatekeeperActivity extends Activity
 		}
 		connector.popDoor(doorId);
 
+	}
+
+	private void resetView ()
+	{
+		Button tempButton;
+		for(int i = FIRST_DOOR; i <= LAST_DOOR; i ++)
+		{
+			tempButton = (Button) findViewById(getId(i));
+			tempButton.setVisibility(View.GONE);
+		}
+		// Maybe bring up a "First time" dialog or some other help here.
 	}
 
 	public void update (String jsonstr)
@@ -248,13 +278,15 @@ public class GatekeeperActivity extends Activity
 				// We did a lock/pop/unlock opperation
 				if(obj.getString("success").equals("false"))
 				{
+					AlertOnClickListener alertListener = new AlertOnClickListener();
 					String errorMessage = obj.getString("error")
 							+ "\nGo back to the log in screen?";
 
 					dialogBuild = new AlertDialog.Builder(GatekeeperActivity.this).setTitle(
 							obj.getString("error_type")).setMessage(errorMessage);
-					dialogBuild.setPositiveButton("Yes, please", new AlertOnClickListener());
-					dialogBuild.setNegativeButton("No thanks", new AlertOnClickListener());
+					dialogBuild.setPositiveButton("Yes, please!", alertListener);
+					dialogBuild.setNegativeButton("No thank you.", alertListener);
+					dialogBuild.setNeutralButton("Clear invalid credentials", alertListener);
 					dialog = dialogBuild.create();
 					dialog.show();
 				}
