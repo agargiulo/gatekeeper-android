@@ -11,10 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:hapticFeedbackEnabled="true"
         android:onClick="popLock"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="20dp" />
+        android:paddingTop="20dp"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/door_5"
@@ -25,7 +27,8 @@
         android:paddingBottom="20dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="20dp" />
+        android:paddingTop="20dp"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/door_6"
@@ -36,7 +39,8 @@
         android:paddingBottom="20dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="20dp" />
+        android:paddingTop="20dp"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/door_7"
@@ -47,7 +51,8 @@
         android:paddingBottom="20dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="20dp" />
+        android:paddingTop="20dp"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/door_8"
@@ -58,7 +63,8 @@
         android:paddingBottom="20dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="20dp" />
+        android:paddingTop="20dp"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/door_9"
@@ -69,6 +75,7 @@
         android:paddingBottom="20dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="20dp" />
+        android:paddingTop="20dp"
+        android:visibility="gone" />
 
 </RelativeLayout>

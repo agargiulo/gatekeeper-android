@@ -240,6 +240,7 @@ public class GatekeeperActivity extends Activity
 					// tempButton.setBackground
 					// tempButton.setBackgroundColor(getColorFromState(doorState));
 					tempButton.setTextColor(getColorFromState(doorState));
+					tempButton.setVisibility(View.VISIBLE);
 				}
 
 			} else
