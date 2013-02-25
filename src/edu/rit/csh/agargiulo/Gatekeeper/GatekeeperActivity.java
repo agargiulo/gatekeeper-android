@@ -24,7 +24,7 @@ import android.widget.Button;
  */
 public class GatekeeperActivity extends Activity
 {
-	class AlertOnClickListener implements DialogInterface.OnClickListener
+	class InvalidCredsOnClickListener implements DialogInterface.OnClickListener
 	{
 
 		@Override
@@ -278,9 +278,8 @@ public class GatekeeperActivity extends Activity
 				// We did a lock/pop/unlock opperation
 				if(obj.getString("success").equals("false"))
 				{
-					AlertOnClickListener alertListener = new AlertOnClickListener();
-					String errorMessage = obj.getString("error")
-							+ "\nGo back to the log in screen?";
+					InvalidCredsOnClickListener alertListener = new InvalidCredsOnClickListener();
+					String errorMessage = obj.getString("error") + "\nGo to the log in screen?";
 
 					dialogBuild = new AlertDialog.Builder(GatekeeperActivity.this).setTitle(
 							obj.getString("error_type")).setMessage(errorMessage);
