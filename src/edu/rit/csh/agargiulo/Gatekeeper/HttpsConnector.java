@@ -21,7 +21,7 @@ import android.util.Log;
  */
 public class HttpsConnector
 {
-	private final String POST_HOST = "api.gatekeeper.csh.rit.edu";
+	static public final String POST_HOST = "api.gatekeeper.csh.rit.edu";
 	private HttpsClient client;
 	private Context context;
 	private Activity activity;

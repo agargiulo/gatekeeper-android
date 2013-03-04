@@ -28,21 +28,22 @@ public class GatekeeperActivity extends Activity
 	{
 
 		@Override
-		public void onClick (DialogInterface dialog, int which)
+		public void onClick (DialogInterface dialog, int whichButton)
 		{
-			switch(which)
+			switch(whichButton)
 			{
+
 			case DialogInterface.BUTTON_POSITIVE:
+				//
 				startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+				break;
 			case DialogInterface.BUTTON_NEGATIVE:
 				resetView();
+				break;
 			case DialogInterface.BUTTON_NEUTRAL:
 				logout();
-			default:
-				break;
 			}
 		}
-
 	}
 
 	private static final int FIRST_DOOR = 4;
@@ -141,7 +142,12 @@ public class GatekeeperActivity extends Activity
 		prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		if(!prefs.getBoolean("loggedin", false))
 		{
+			// User is not logged in, bring up the LoginActivity
 			startActivityForResult(new Intent(this, LoginActivity.class), 0);
+		} else
+		{
+			// User was already logged in, get ALL of the doors!
+			connector.getAllDoors();
 		}
 	}
 
@@ -273,24 +279,21 @@ public class GatekeeperActivity extends Activity
 					tempButton.setVisibility(View.VISIBLE);
 				}
 
-			} else
+			} else if(obj.has("success") && obj.getString("success").equals("false"))
 			{
 				// We did a lock/pop/unlock opperation
-				if(obj.getString("success").equals("false"))
-				{
-					InvalidCredsOnClickListener alertListener = new InvalidCredsOnClickListener();
-					String errorMessage = obj.getString("error") + "\nGo to the log in screen?";
+				InvalidCredsOnClickListener alertListener = new InvalidCredsOnClickListener();
+				String errorMessage = obj.getString("error") + "\nGo to the log in screen?";
 
-					dialogBuild = new AlertDialog.Builder(GatekeeperActivity.this).setTitle(
-							obj.getString("error_type")).setMessage(errorMessage);
-					dialogBuild.setPositiveButton("Yes, please!", alertListener);
-					dialogBuild.setNegativeButton("No thank you.", alertListener);
-					dialogBuild.setNeutralButton("Clear invalid credentials", alertListener);
-					dialog = dialogBuild.create();
-					dialog.show();
-				}
-
+				dialogBuild = new AlertDialog.Builder(GatekeeperActivity.this).setTitle(
+						obj.getString("error_type")).setMessage(errorMessage);
+				dialogBuild.setPositiveButton("Yes, please!", alertListener);
+				dialogBuild.setNegativeButton("No thank you.", alertListener);
+				dialogBuild.setNeutralButton("Clear invalid credentials", alertListener);
+				dialog = dialogBuild.create();
+				dialog.show();
 			}
+
 		} catch(JSONException je)
 		{
 			Log.e(this.getClass().toString(), je.getMessage(), je);
