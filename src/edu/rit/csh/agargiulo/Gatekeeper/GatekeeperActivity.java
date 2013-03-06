@@ -317,8 +317,12 @@ public class GatekeeperActivity extends Activity
 					tempButton.setText(doorName + ":" + doorState);
 					// tempButton.setBackground
 					// tempButton.setBackgroundColor(getColorFromState(doorState));
-					tempButton.setTextColor(getColorFromState(doorState));
+					tempButton.setBackgroundColor(getColorFromState(doorState));
 					tempButton.setVisibility(View.VISIBLE);
+					if(doorState.equals("unknown"))
+					{
+						tempButton.setEnabled(false);
+					}
 				}
 				wel_mesg = (TextView) findViewById(R.id.welcome_message);
 				wel_mesg.setVisibility(View.GONE);
