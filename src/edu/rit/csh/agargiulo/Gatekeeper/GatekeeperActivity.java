@@ -154,6 +154,10 @@ public class GatekeeperActivity extends Activity
 				invalidateOptionsMenu();
 			}
 			// Log.d("gatekeeper", username);
+			if(connector == null)
+			{
+				connector = new HttpsConnector(this);
+			}
 			connector.getAllDoors();
 		}
 
@@ -165,7 +169,6 @@ public class GatekeeperActivity extends Activity
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
-		connector = new HttpsConnector(this);
 		prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		if(!prefs.getBoolean("loggedin", false))
 		{
@@ -175,6 +178,10 @@ public class GatekeeperActivity extends Activity
 		} else
 		{
 			// User was already logged in, get ALL of the doors!
+			if(connector == null)
+			{
+				connector = new HttpsConnector(this);
+			}
 			connector.getAllDoors();
 		}
 	}

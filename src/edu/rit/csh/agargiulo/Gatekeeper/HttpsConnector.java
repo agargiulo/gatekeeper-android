@@ -42,11 +42,14 @@ public class HttpsConnector
 	 */
 	public HttpsConnector (Context context)
 	{
+		String username, password;
 		this.context = context;
 		client = new HttpsClient(this.context);
 		prefs = PreferenceManager.getDefaultSharedPreferences(context);
-		usernameNvp = new BasicNameValuePair("username", prefs.getString("username", ""));
-		passwordNvp = new BasicNameValuePair("password", prefs.getString("password", ""));
+		username = prefs.getString("username", "");
+		password = prefs.getString("password", "");
+		usernameNvp = new BasicNameValuePair("username", username);
+		passwordNvp = new BasicNameValuePair("password", password);
 
 	}
 
