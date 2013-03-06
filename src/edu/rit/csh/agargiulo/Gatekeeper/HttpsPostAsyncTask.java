@@ -61,10 +61,7 @@ public class HttpsPostAsyncTask extends AsyncTask<BasicNameValuePair, Integer, S
 			for(BasicNameValuePair nvp : args)
 			{
 				argPairs.add(new BasicNameValuePair(nvp.getName(), nvp.getValue()));
-				if(!nvp.getName().equals("password"))
-				{
-					Log.d("postasync", nvp.toString());
-				}
+				// Log.d("postasync", nvp.toString());
 			}
 
 			request.setEntity(new UrlEncodedFormEntity(argPairs));

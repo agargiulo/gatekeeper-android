@@ -84,11 +84,15 @@ public class LoginActivity extends Activity
 			// credentials in the SharedPreferances
 			showProgress(true);
 
-			Log.d(this.getClass().toString() + " attemptLogin()", "user: " + mUsername);
+			// Log.d(this.getClass().toString() + " attemptLogin()", "user: " +
+			// mUsername);
 
-			PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit()
+			if(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit()
 					.putString("username", mUsername).putString("password", mPassword)
-					.putBoolean("loggedin", true).commit();
+					.putBoolean("loggedin", true).commit() == false)
+			{
+				Log.e("attempt login", "Commit failed, bro.");
+			}
 			Toast.makeText(getApplicationContext(), "Logged in as user: " + mUsername,
 					Toast.LENGTH_SHORT).show();
 			showProgress(false);

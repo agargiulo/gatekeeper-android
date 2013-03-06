@@ -303,7 +303,7 @@ public class GatekeeperActivity extends Activity
 		try
 		{
 			obj = new JSONObject(jsonstr);
-			Log.d("GatekeeperActivity.update(s): ", obj.toString(3));
+			// Log.d("GatekeeperActivity.update(s): ", obj.toString());
 			if(obj.has("response") && !obj.getString("response").equals("null"))
 			{
 				// all_doors or door_state/id was called

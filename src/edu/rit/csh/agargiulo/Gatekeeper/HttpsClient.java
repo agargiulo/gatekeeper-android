@@ -77,7 +77,7 @@ public class HttpsClient extends DefaultHttpClient
 			return sslSf;
 		} catch(KeyStoreException kse)
 		{
-			Log.e(this.getClass().toString() + " newSSLSocketFactory", kse.getMessage(), kse);
+			Log.e(this.getClass().toString() + " KeyStoreException", kse.getMessage(), kse);
 		} catch(NoSuchAlgorithmException nsae)
 		{
 			Log.e(this.getClass().toString() + " NoSuchAlgorithmException", nsae.getMessage(), nsae);
