@@ -38,16 +38,13 @@ public class GatekeeperActivity extends Activity
 		{
 			switch(whichButton)
 			{
-
 			case DialogInterface.BUTTON_POSITIVE:
 				//
 				startActivity(new Intent(getApplicationContext(), LoginActivity.class));
 				break;
 			case DialogInterface.BUTTON_NEGATIVE:
-				resetView();
-				break;
-			case DialogInterface.BUTTON_NEUTRAL:
 				logout();
+				break;
 			}
 		}
 	}
@@ -332,8 +329,7 @@ public class GatekeeperActivity extends Activity
 				dialogBuild = new AlertDialog.Builder(GatekeeperActivity.this).setTitle(
 						obj.getString("error_type")).setMessage(errorMessage);
 				dialogBuild.setPositiveButton("Yes, please!", alertListener);
-				dialogBuild.setNegativeButton("No thank you.", alertListener);
-				dialogBuild.setNeutralButton("Clear invalid credentials", alertListener);
+				dialogBuild.setNegativeButton("Clear invalid credentials", alertListener);
 				dialog = dialogBuild.create();
 				dialog.show();
 			}
