@@ -45,7 +45,6 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_username"
                 android:inputType="textNoSuggestions"
-                android:maxLines="1"
                 android:singleLine="true" />
 
             <EditText
@@ -53,11 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/prompt_password"
-                android:imeActionId="@+id/login"
-                android:imeActionLabel="@string/action_sign_in_short"
-                android:imeOptions="actionUnspecified"
                 android:inputType="textPassword"
-                android:maxLines="1"
                 android:singleLine="true" />
 
             <Button
@@ -69,7 +64,7 @@
                 android:paddingLeft="32dp"
                 android:paddingRight="32dp"
                 android:onClick="attemptLogin"
-                android:text="@string/action_sign_in_register" />
+                android:text="@string/action_sign_in" />
         </LinearLayout>
     </ScrollView>
 
