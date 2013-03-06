@@ -6,6 +6,46 @@
     android:paddingLeft="10dp"
     android:paddingRight="10dp" >
 
+    <TextView
+        android:id="@+id/welcome_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:layout_marginBottom="25dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/welcome_message"
+        android:visibility="visible" />
+
+    <RelativeLayout
+        android:id="@+id/main_screen_buttons"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/welcome_message"
+        android:layout_centerHorizontal="true" >
+
+        <Button
+            android:id="@+id/login_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="login"
+            android:layout_marginRight="8dp"
+            android:text="@string/action_sign_in"
+            android:visibility="visible" />
+
+        <Button
+            android:id="@+id/about_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/login_button"
+            android:onClick="about"
+            android:layout_marginLeft="8dp"
+            android:text="@string/menu_about"
+            android:visibility="visible" />
+    </RelativeLayout>
+
     <Button
         android:id="@+id/door_4"
         android:layout_width="match_parent"
@@ -15,7 +55,7 @@
         android:onClick="popLock"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="20dp"
+        android:layout_marginTop="20dp"
         android:visibility="gone" />
 
     <Button
@@ -27,7 +67,7 @@
         android:paddingBottom="20dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="20dp"
+        android:layout_marginTop="20dp"
         android:visibility="gone" />
 
     <Button
@@ -39,7 +79,7 @@
         android:paddingBottom="20dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="20dp"
+        android:layout_marginTop="20dp"
         android:visibility="gone" />
 
     <Button
@@ -51,7 +91,7 @@
         android:paddingBottom="20dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="20dp"
+        android:layout_marginTop="20dp"
         android:visibility="gone" />
 
     <Button
@@ -63,7 +103,7 @@
         android:paddingBottom="20dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="20dp"
+        android:layout_marginTop="20dp"
         android:visibility="gone" />
 
     <Button
@@ -75,7 +115,7 @@
         android:paddingBottom="20dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="20dp"
+        android:layout_marginTop="20dp"
         android:visibility="gone" />
 
 </RelativeLayout>

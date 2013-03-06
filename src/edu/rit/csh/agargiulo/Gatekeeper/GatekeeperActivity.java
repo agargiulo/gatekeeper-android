@@ -1,15 +1,19 @@
 package edu.rit.csh.agargiulo.Gatekeeper;
 
+import java.util.Map;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -17,11 +21,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 /**
  * @author Anthony Gargiulo <anthony@agargiulo.com>
  * 
  */
+@SuppressLint("NewApi")
 public class GatekeeperActivity extends Activity
 {
 	class InvalidCredsOnClickListener implements DialogInterface.OnClickListener
@@ -51,6 +57,14 @@ public class GatekeeperActivity extends Activity
 
 	private HttpsConnector connector;
 	private SharedPreferences prefs;
+
+	/**
+	 * 
+	 */
+	public void about (View view)
+	{
+		startActivity(new Intent(this, AboutActivity.class));
+	}
 
 	private int getColorFromState (String doorState)
 	{
@@ -101,6 +115,15 @@ public class GatekeeperActivity extends Activity
 	}
 
 	/**
+	 * 
+	 * 
+	 */
+	public void login (View view)
+	{
+		startActivityForResult(new Intent(this, LoginActivity.class), 0);
+	}
+
+	/**
 	 * Deletes the stored username and password from the preferences effectivly
 	 * logging out of the app
 	 */
@@ -108,9 +131,13 @@ public class GatekeeperActivity extends Activity
 	{
 		// This is possible because awesomeness
 		prefs.edit().remove("username").remove("password").remove("loggedin").commit();
-		invalidateOptionsMenu();
-		Log.d("logout", "logged out user");
+		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+		{
+			invalidateOptionsMenu();
+		}
+		// Log.d("logout", "logged out user");
 		resetView();
+
 	}
 
 	@Override
@@ -125,8 +152,11 @@ public class GatekeeperActivity extends Activity
 			prefs.edit().remove("loggedin").commit();
 		} else
 		{
-			Log.d("gatekeeper", username);
-			invalidateOptionsMenu();
+			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
+			{
+				invalidateOptionsMenu();
+			}
+			// Log.d("gatekeeper", username);
 			connector.getAllDoors();
 		}
 
@@ -142,8 +172,9 @@ public class GatekeeperActivity extends Activity
 		prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 		if(!prefs.getBoolean("loggedin", false))
 		{
-			// User is not logged in, bring up the LoginActivity
-			startActivityForResult(new Intent(this, LoginActivity.class), 0);
+			// User is not logged in
+			// show Welcome message and the login/about buttons
+			resetView();
 		} else
 		{
 			// User was already logged in, get ALL of the doors!
@@ -188,10 +219,12 @@ public class GatekeeperActivity extends Activity
 		{
 			menu.findItem(R.id.menu_login).setVisible(false);
 			menu.findItem(R.id.menu_logout).setVisible(true);
+			menu.findItem(R.id.menu_about).setVisible(true);
 		} else
 		{
 			menu.findItem(R.id.menu_logout).setVisible(false);
-			menu.findItem(R.id.menu_login).setVisible(true);
+			menu.findItem(R.id.menu_login).setVisible(false);
+			menu.findItem(R.id.menu_about).setVisible(false);
 		}
 		return result;
 	}
@@ -245,6 +278,10 @@ public class GatekeeperActivity extends Activity
 			tempButton = (Button) findViewById(getId(i));
 			tempButton.setVisibility(View.GONE);
 		}
+		findViewById(R.id.about_button).setVisibility(View.VISIBLE);
+		findViewById(R.id.welcome_message).setVisibility(View.VISIBLE);
+		findViewById(R.id.login_button).setVisibility(View.VISIBLE);
+
 		// Maybe bring up a "First time" dialog or some other help here.
 	}
 
@@ -256,6 +293,7 @@ public class GatekeeperActivity extends Activity
 		Button tempButton;
 		AlertDialog.Builder dialogBuild;
 		AlertDialog dialog;
+		TextView wel_mesg;
 		// RelativeLayout relLayout = (RelativeLayout)
 		// findViewById(R.id.gatekeeper_main_screen);
 		try
@@ -278,6 +316,12 @@ public class GatekeeperActivity extends Activity
 					tempButton.setTextColor(getColorFromState(doorState));
 					tempButton.setVisibility(View.VISIBLE);
 				}
+				wel_mesg = (TextView) findViewById(R.id.welcome_message);
+				wel_mesg.setVisibility(View.GONE);
+				tempButton = (Button) findViewById(R.id.about_button);
+				tempButton.setVisibility(View.GONE);
+				tempButton = (Button) findViewById(R.id.login_button);
+				tempButton.setVisibility(View.GONE);
 
 			} else if(obj.has("success") && obj.getString("success").equals("false"))
 			{
