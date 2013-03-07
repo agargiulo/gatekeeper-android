@@ -74,7 +74,8 @@ public class LoginActivity extends Activity
 			// There was an error; don't attempt login and focus the first
 			// form field with an error.
 			focusView.requestFocus();
-		} else
+		}
+		else
 		{
 			// Show a progress spinner, and kick off a background task to
 			// perform the user login attempt.
@@ -165,7 +166,8 @@ public class LoginActivity extends Activity
 							mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
 						}
 					});
-		} else
+		}
+		else
 		{
 			// The ViewPropertyAnimator APIs are not available, so simply show
 			// and hide the relevant UI components.

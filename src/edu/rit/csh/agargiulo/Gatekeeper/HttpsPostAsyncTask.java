@@ -77,15 +77,18 @@ public class HttpsPostAsyncTask extends AsyncTask<BasicNameValuePair, Integer, S
 			page = strBuf.toString();
 			return page;
 
-		} catch(ClientProtocolException cpe)
+		}
+		catch(ClientProtocolException cpe)
 		{
 			Log.e(this.getClass().toString(), cpe.getMessage(), cpe);
 			return null;
-		} catch(UnsupportedEncodingException uee)
+		}
+		catch(UnsupportedEncodingException uee)
 		{
 			Log.e(this.getClass().toString(), uee.getMessage(), uee);
 			return null;
-		} catch(IOException ioe)
+		}
+		catch(IOException ioe)
 		{
 			Log.e(this.getClass().toString(), ioe.getMessage(), ioe);
 			return null;

@@ -81,15 +81,18 @@ public class GatekeeperActivity extends Activity
 		{
 			// #DDDDDD = Gray
 			color = Color.parseColor("#DDDDDD");
-		} else if(doorState.equals("unlocked"))
+		}
+		else if(doorState.equals("unlocked"))
 		{
 			// #FF8080 = The red used on the web app
 			color = Color.parseColor("#FF8080");
-		} else if(doorState.equals("locked"))
+		}
+		else if(doorState.equals("locked"))
 		{
 			// #80c080 = The green used on the web app
 			color = Color.parseColor("#80c080");
-		} else
+		}
+		else
 		{
 			color = Color.MAGENTA;
 		}
@@ -162,7 +165,8 @@ public class GatekeeperActivity extends Activity
 		{
 			Log.e("Gatekeeper", "LoginActivity.onActivityResults: Invalid username");
 			prefs.edit().remove("loggedin").commit();
-		} else
+		}
+		else
 		{
 			if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
 			{
@@ -190,7 +194,8 @@ public class GatekeeperActivity extends Activity
 			// User is not logged in
 			// show Welcome message and the login/about buttons
 			resetView();
-		} else
+		}
+		else
 		{
 			// User was already logged in, get ALL of the doors!
 			if(connector == null)
@@ -239,7 +244,8 @@ public class GatekeeperActivity extends Activity
 			menu.findItem(R.id.menu_login).setVisible(false);
 			menu.findItem(R.id.menu_logout).setVisible(true);
 			menu.findItem(R.id.menu_about).setVisible(true);
-		} else
+		}
+		else
 		{
 			menu.findItem(R.id.menu_logout).setVisible(false);
 			menu.findItem(R.id.menu_login).setVisible(false);
@@ -349,25 +355,29 @@ public class GatekeeperActivity extends Activity
 					dialogBuild.setMessage(errorStr + "\nGo to the log in screen?");
 					dialogBuild.setPositiveButton("Yes, please!", alertListener);
 					dialogBuild.setNegativeButton("Clear invalid credentials", alertListener);
-				} else if(errorTypeStr.equals("denial"))
+				}
+				else if(errorTypeStr.equals("denial"))
 				{
 					dialogBuild.setMessage(errorStr);
 					// dialogBuild.setNeutralButton("Okay", alertListener);
-				} else if(errorTypeStr.equals("command"))
+				}
+				else if(errorTypeStr.equals("command"))
 				{
 					Log.wtf("gatekeeper update(String jsonstr)",
 							"Invalid command! This should never get run unless Crawford changed the API on me");
 				}
 				dialog = dialogBuild.create();
 				dialog.show();
-			} else if(!responseStr.equals("null"))
+			}
+			else if(!responseStr.equals("null"))
 			{
 				if(responseStr.equals("unlocked") || responseStr.equals("locked"))
 				{
 					tempButton = (Button) findViewById(getId(door));
 					tempButton.setBackgroundColor(getColorFromState(responseStr));
 					tempButton.setEnabled(true);
-				} else
+				}
+				else
 				{
 					// all_doors or door_state/id was called
 					response = new JSONArray(responseStr);
@@ -383,7 +393,8 @@ public class GatekeeperActivity extends Activity
 						if(doorState.equals("unknown"))
 						{
 							tempButton.setEnabled(false);
-						} else
+						}
+						else
 						{
 							tempButton.setEnabled(true);
 						}
@@ -397,7 +408,8 @@ public class GatekeeperActivity extends Activity
 				}
 			}
 
-		} catch(JSONException je)
+		}
+		catch(JSONException je)
 		{
 			Log.e("JSON Errors " + this.getClass().toString(), je.getMessage(), je);
 		}
