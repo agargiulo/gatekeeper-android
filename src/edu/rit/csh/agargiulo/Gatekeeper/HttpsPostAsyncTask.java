@@ -98,7 +98,7 @@ public class HttpsPostAsyncTask extends AsyncTask<BasicNameValuePair, Integer, S
 	protected void onPostExecute (String json)
 	{
 		super.onPostExecute(json);
-		if(progress.isShowing())
+		if(progress != null && progress.isShowing())
 		{
 			progress.cancel();
 		}

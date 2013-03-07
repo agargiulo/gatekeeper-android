@@ -78,13 +78,16 @@ public class GatekeeperActivity extends Activity
 		int color;
 		if(doorState.equals("unknown"))
 		{
-			color = Color.GRAY;
+			// #DDDDDD = Gray
+			color = Color.parseColor("#DDDDDD");
 		} else if(doorState.equals("unlocked"))
 		{
-			color = Color.RED;
+			// #FF8080 = The red used on the web app
+			color = Color.parseColor("#FF8080");
 		} else if(doorState.equals("locked"))
 		{
-			color = Color.GREEN;
+			// #80c080 = The green used on the web app
+			color = Color.parseColor("#80c080");
 		} else
 		{
 			color = Color.MAGENTA;
@@ -245,6 +248,7 @@ public class GatekeeperActivity extends Activity
 
 	public void popLock (View view)
 	{
+		((Button) view).setBackgroundColor(Color.parseColor("#FFD280"));
 		int doorId;
 		switch(view.getId())
 		{
@@ -281,6 +285,14 @@ public class GatekeeperActivity extends Activity
 			doorId = -1;
 		}
 		connector.popDoor(doorId);
+		try
+		{
+			Thread.sleep(1);
+		} catch(InterruptedException e)
+		{
+			Log.e("InterruptedException", "", e);
+		}
+		connector.getAllDoors();
 
 	}
 
