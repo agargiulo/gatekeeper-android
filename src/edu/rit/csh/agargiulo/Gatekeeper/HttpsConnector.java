@@ -21,12 +21,12 @@ import android.util.Log;
  */
 public class HttpsConnector
 {
-	static public final String POST_HOST = "api.gatekeeper.csh.rit.edu";
+	static protected final String POST_HOST = "api.gatekeeper.csh.rit.edu";
 	private HttpsClient client;
 	private Context context;
 	private Activity activity;
 	private SharedPreferences prefs;
-	BasicNameValuePair usernameNvp, passwordNvp;
+	private BasicNameValuePair usernameNvp, passwordNvp;
 
 	/**
 	 * 
@@ -75,7 +75,7 @@ public class HttpsConnector
 	{
 		URI doorsUrl = createUrl("all_doors");
 		BasicNameValuePair urlNvp = new BasicNameValuePair("url", doorsUrl.toString());
-		new HttpsPostAsyncTask(client, activity).execute(urlNvp, usernameNvp, passwordNvp);
+		new HttpsPostAsyncTask(client, activity, -1).execute(urlNvp, usernameNvp, passwordNvp);
 	}
 
 	/**
@@ -85,7 +85,7 @@ public class HttpsConnector
 	{
 		URI stateUrl = createUrl("door_state/" + doorId);
 		BasicNameValuePair urlNvp = new BasicNameValuePair("url", stateUrl.toString());
-		new HttpsPostAsyncTask(client, activity).execute(urlNvp, usernameNvp, passwordNvp);
+		new HttpsPostAsyncTask(client, activity, doorId).execute(urlNvp, usernameNvp, passwordNvp);
 	}
 
 	/**
@@ -95,7 +95,7 @@ public class HttpsConnector
 	{
 		URI lockUrl = createUrl("lock/" + doorId);
 		BasicNameValuePair urlNvp = new BasicNameValuePair("url", lockUrl.toString());
-		new HttpsPostAsyncTask(client, activity).execute(urlNvp, usernameNvp, passwordNvp);
+		new HttpsPostAsyncTask(client, activity, doorId).execute(urlNvp, usernameNvp, passwordNvp);
 	}
 
 	/**
@@ -105,7 +105,7 @@ public class HttpsConnector
 	{
 		URI popUrl = createUrl("pop/" + doorId);
 		BasicNameValuePair urlNvp = new BasicNameValuePair("url", popUrl.toString());
-		new HttpsPostAsyncTask(client, activity).execute(urlNvp, usernameNvp, passwordNvp);
+		new HttpsPostAsyncTask(client, activity, doorId).execute(urlNvp, usernameNvp, passwordNvp);
 	}
 
 	/**
@@ -115,6 +115,6 @@ public class HttpsConnector
 	{
 		URI unlockUrl = createUrl("unlock/" + doorId);
 		BasicNameValuePair urlNvp = new BasicNameValuePair("url", unlockUrl.toString());
-		new HttpsPostAsyncTask(client, activity).execute(urlNvp, usernameNvp, passwordNvp);
+		new HttpsPostAsyncTask(client, activity, doorId).execute(urlNvp, usernameNvp, passwordNvp);
 	}
 }

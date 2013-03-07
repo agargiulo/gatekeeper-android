@@ -29,15 +29,17 @@ public class HttpsPostAsyncTask extends AsyncTask<BasicNameValuePair, Integer, S
 {
 	private HttpsClient gatekeeperClient;
 	private Activity activity;
-	ProgressDialog progress;
+	private ProgressDialog progress;
+	private int doorID;
 
 	/**
 	 * 
 	 */
-	public HttpsPostAsyncTask (HttpsClient client, Activity callingActivity)
+	public HttpsPostAsyncTask (HttpsClient client, Activity callingActivity, int doorID)
 	{
 		gatekeeperClient = client;
 		activity = callingActivity;
+		this.doorID = doorID;
 	}
 
 	/**
@@ -104,7 +106,7 @@ public class HttpsPostAsyncTask extends AsyncTask<BasicNameValuePair, Integer, S
 		}
 		if(activity != null)
 		{
-			((GatekeeperActivity) activity).update(json);
+			((GatekeeperActivity) activity).update(json, doorID);
 		}
 	}
 

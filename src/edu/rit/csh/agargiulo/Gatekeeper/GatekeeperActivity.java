@@ -41,11 +41,12 @@ public class GatekeeperActivity extends Activity
 			switch(whichButton)
 			{
 			case DialogInterface.BUTTON_POSITIVE:
-				//
 				startActivity(new Intent(getApplicationContext(), LoginActivity.class));
 				break;
 			case DialogInterface.BUTTON_NEGATIVE:
 				logout();
+				break;
+			case DialogInterface.BUTTON_NEUTRAL:
 				break;
 			}
 		}
@@ -310,66 +311,92 @@ public class GatekeeperActivity extends Activity
 		findViewById(R.id.login_button).setVisibility(View.VISIBLE);
 	}
 
-	public void update (String jsonstr)
+	public void update (String jsonstr, int doorID)
 	{
 		JSONObject obj;
+		JSONArray response;
+		InvalidCredsOnClickListener alertListener;
 		int doorId;
 		String doorState, doorName;
 		Button tempButton;
 		AlertDialog.Builder dialogBuild;
 		AlertDialog dialog;
 		TextView wel_mesg;
-		// RelativeLayout relLayout = (RelativeLayout)
-		// findViewById(R.id.gatekeeper_main_screen);
+		// These will be the values received from the JSON string
+		String responseStr, errorStr, errorTypeStr;
+		boolean success;
+
 		try
 		{
 			obj = new JSONObject(jsonstr);
-			// Log.d("GatekeeperActivity.update(s): ", obj.toString());
-			if(obj.has("response") && !obj.getString("response").equals("null"))
+
+			/*
+			 * initialize these here to make life SO much better later on
+			 */
+			success = Boolean.valueOf(obj.getString("success"));
+			responseStr = obj.getString("response");
+			errorStr = obj.getString("error");
+			errorTypeStr = obj.getString("error_type");
+
+			if(!success)
 			{
-				// all_doors or door_state/id was called
-				JSONArray response = obj.getJSONArray("response");
-				for(int i = 0; i < response.length(); i ++)
+				// The command we tried to run failed.
+				// Display a dialog to the user stating the error
+
+				alertListener = new InvalidCredsOnClickListener();
+				dialogBuild = new AlertDialog.Builder(this);
+				dialogBuild.setTitle(errorTypeStr);
+				if(errorTypeStr.equals("login"))
 				{
-					doorState = response.getJSONObject(i).getString("state");
-					doorId = response.getJSONObject(i).getInt("id");
-					doorName = response.getJSONObject(i).getString("name");
-					tempButton = (Button) findViewById(getId(doorId));
-					tempButton.setText(doorName + ":" + doorState);
-					// tempButton.setBackground
-					// tempButton.setBackgroundColor(getColorFromState(doorState));
-					tempButton.setBackgroundColor(getColorFromState(doorState));
-					tempButton.setVisibility(View.VISIBLE);
-					if(doorState.equals("unknown"))
-					{
-						tempButton.setEnabled(false);
-					}
+					dialogBuild.setMessage(errorStr + "\nGo to the log in screen?");
+					dialogBuild.setPositiveButton("Yes, please!", alertListener);
+					dialogBuild.setNegativeButton("Clear invalid credentials", alertListener);
+				} else if(errorTypeStr.equals("denial"))
+				{
+					dialogBuild.setMessage(errorStr);
+					// dialogBuild.setNeutralButton("Okay", alertListener);
+				} else if(errorTypeStr.equals("command"))
+				{
+					Log.wtf("gatekeeper update(String jsonstr)",
+							"Invalid command! This should never get run unless Crawford changed the API on me");
 				}
-				wel_mesg = (TextView) findViewById(R.id.welcome_message);
-				wel_mesg.setVisibility(View.GONE);
-				tempButton = (Button) findViewById(R.id.about_button);
-				tempButton.setVisibility(View.GONE);
-				tempButton = (Button) findViewById(R.id.login_button);
-				tempButton.setVisibility(View.GONE);
-
-			} else if(obj.has("success") && obj.getString("success").equals("false"))
-			{
-				// We did a lock/pop/unlock opperation
-				InvalidCredsOnClickListener alertListener = new InvalidCredsOnClickListener();
-				String errorMessage = obj.getString("error") + "\nGo to the log in screen?";
-
-				dialogBuild = new AlertDialog.Builder(GatekeeperActivity.this).setTitle(
-						obj.getString("error_type")).setMessage(errorMessage);
-				dialogBuild.setPositiveButton("Yes, please!", alertListener);
-				dialogBuild.setNegativeButton("Clear invalid credentials", alertListener);
 				dialog = dialogBuild.create();
 				dialog.show();
+			} else if(!responseStr.equals("null"))
+			{
+				if(responseStr.equals("unlocked") || responseStr.equals("locked"))
+				{
+
+				} else
+				{
+					// all_doors or door_state/id was called
+					response = new JSONArray(responseStr);
+					for(int i = 0; i < response.length(); i ++)
+					{
+						doorState = response.getJSONObject(i).getString("state");
+						doorId = response.getJSONObject(i).getInt("id");
+						doorName = response.getJSONObject(i).getString("name");
+						tempButton = (Button) findViewById(getId(doorId));
+						tempButton.setText(doorName + ":" + doorState);
+						tempButton.setBackgroundColor(getColorFromState(doorState));
+						tempButton.setVisibility(View.VISIBLE);
+						if(doorState.equals("unknown"))
+						{
+							tempButton.setEnabled(false);
+						}
+					}
+					wel_mesg = (TextView) findViewById(R.id.welcome_message);
+					wel_mesg.setVisibility(View.GONE);
+					tempButton = (Button) findViewById(R.id.about_button);
+					tempButton.setVisibility(View.GONE);
+					tempButton = (Button) findViewById(R.id.login_button);
+					tempButton.setVisibility(View.GONE);
+				}
 			}
 
 		} catch(JSONException je)
 		{
-			Log.e(this.getClass().toString(), je.getMessage(), je);
-			return;
+			Log.e("JSON Errors " + this.getClass().toString(), je.getMessage(), je);
 		}
 	}
 }
