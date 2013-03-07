@@ -54,7 +54,7 @@ public class LoginActivity extends Activity
 		View focusView = null;
 
 		// Check for a valid email address.
-		if(TextUtils.isEmpty(mUsername))
+		if (TextUtils.isEmpty(mUsername))
 		{
 			mUsernameView.setError(getString(R.string.error_field_required));
 			focusView = mUsernameView;
@@ -62,14 +62,14 @@ public class LoginActivity extends Activity
 		}
 
 		// Check for a valid password.
-		if(TextUtils.isEmpty(mPassword))
+		if (TextUtils.isEmpty(mPassword))
 		{
 			mPasswordView.setError(getString(R.string.error_field_required));
 			focusView = mPasswordView;
 			cancel = true;
 		}
 
-		if(cancel)
+		if (cancel)
 		{
 			// There was an error; don't attempt login and focus the first
 			// form field with an error.
@@ -88,7 +88,7 @@ public class LoginActivity extends Activity
 			// Log.d(this.getClass().toString() + " attemptLogin()", "user: " +
 			// mUsername);
 
-			if(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit()
+			if (PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit()
 					.putString("username", mUsername).putString("password", mPassword)
 					.putBoolean("loggedin", true).commit() == false)
 			{
@@ -141,7 +141,7 @@ public class LoginActivity extends Activity
 		// On Honeycomb MR2 we have the ViewPropertyAnimator APIs, which allow
 		// for very easy animations. If available, use these APIs to fade-in
 		// the progress spinner.
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2)
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2)
 		{
 			int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
 

@@ -76,27 +76,27 @@ public class HttpsClient extends DefaultHttpClient
 			sslSf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
 			return sslSf;
 		}
-		catch(KeyStoreException kse)
+		catch (KeyStoreException kse)
 		{
 			Log.e(this.getClass().toString() + " KeyStoreException", kse.getMessage(), kse);
 		}
-		catch(NoSuchAlgorithmException nsae)
+		catch (NoSuchAlgorithmException nsae)
 		{
 			Log.e(this.getClass().toString() + " NoSuchAlgorithmException", nsae.getMessage(), nsae);
 		}
-		catch(CertificateException ce)
+		catch (CertificateException ce)
 		{
 			Log.e(this.getClass().toString() + " CertificateException", ce.getMessage(), ce);
 		}
-		catch(IOException ioe)
+		catch (IOException ioe)
 		{
 			Log.e(this.getClass().toString() + " IOException", ioe.getMessage(), ioe);
 		}
-		catch(KeyManagementException kme)
+		catch (KeyManagementException kme)
 		{
 			Log.e(this.getClass().toString() + " KeyManagementException", kme.getMessage(), kme);
 		}
-		catch(UnrecoverableKeyException uke)
+		catch (UnrecoverableKeyException uke)
 		{
 			Log.e(this.getClass().toString() + " UnrecoverableKeyException", uke.getMessage(), uke);
 		}

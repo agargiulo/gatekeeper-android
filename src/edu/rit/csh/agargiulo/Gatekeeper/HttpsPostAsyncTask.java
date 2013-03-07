@@ -57,7 +57,7 @@ public class HttpsPostAsyncTask extends AsyncTask<BasicNameValuePair, Integer, S
 		{
 			request = new HttpPost(args[0].getValue());
 
-			for(BasicNameValuePair nvp : args)
+			for (BasicNameValuePair nvp : args)
 			{
 				argPairs.add(new BasicNameValuePair(nvp.getName(), nvp.getValue()));
 				// Log.d("postasync", nvp.toString());
@@ -68,7 +68,7 @@ public class HttpsPostAsyncTask extends AsyncTask<BasicNameValuePair, Integer, S
 			response = gatekeeperClient.execute(request);
 			bufReader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 
-			while( (line = bufReader.readLine()) != null)
+			while ( (line = bufReader.readLine()) != null)
 			{
 				strBuf.append(line + newLine);
 			}
@@ -78,17 +78,17 @@ public class HttpsPostAsyncTask extends AsyncTask<BasicNameValuePair, Integer, S
 			return page;
 
 		}
-		catch(ClientProtocolException cpe)
+		catch (ClientProtocolException cpe)
 		{
 			Log.e(this.getClass().toString(), cpe.getMessage(), cpe);
 			return null;
 		}
-		catch(UnsupportedEncodingException uee)
+		catch (UnsupportedEncodingException uee)
 		{
 			Log.e(this.getClass().toString(), uee.getMessage(), uee);
 			return null;
 		}
-		catch(IOException ioe)
+		catch (IOException ioe)
 		{
 			Log.e(this.getClass().toString(), ioe.getMessage(), ioe);
 			return null;
@@ -100,11 +100,11 @@ public class HttpsPostAsyncTask extends AsyncTask<BasicNameValuePair, Integer, S
 	protected void onPostExecute (String json)
 	{
 		super.onPostExecute(json);
-		if(progress != null && progress.isShowing())
+		if (progress != null && progress.isShowing())
 		{
 			progress.cancel();
 		}
-		if(activity != null)
+		if (activity != null)
 		{
 			((GatekeeperActivity) activity).update(json, doorID);
 		}

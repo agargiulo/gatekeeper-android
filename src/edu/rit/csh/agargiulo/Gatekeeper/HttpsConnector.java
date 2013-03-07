@@ -60,7 +60,7 @@ public class HttpsConnector
 		{
 			postUri = URIUtils.createURI("https", POST_HOST, 0, path, null, null);
 		}
-		catch(URISyntaxException e)
+		catch (URISyntaxException e)
 		{
 			Log.e(this.getClass().toString() + "URISyntaxException", e.getMessage(), e);
 			postUri = null;
