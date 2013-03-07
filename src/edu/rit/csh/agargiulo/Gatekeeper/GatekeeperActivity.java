@@ -1,7 +1,5 @@
 package edu.rit.csh.agargiulo.Gatekeeper;
 
-import java.util.Map;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,8 +22,9 @@ import android.widget.Button;
 import android.widget.TextView;
 
 /**
- * @author Anthony Gargiulo <anthony@agargiulo.com>
+ * This is the class for the Main Activity of the Gatekeeper App
  * 
+ * @author Anthony Gargiulo <anthony@agargiulo.com>
  */
 @SuppressLint("NewApi")
 public class GatekeeperActivity extends Activity
@@ -33,6 +32,9 @@ public class GatekeeperActivity extends Activity
 	class InvalidCredsOnClickListener implements DialogInterface.OnClickListener
 	{
 
+		/* (non-Javadoc)
+		 * @see android.content.DialogInterface.OnClickListener#onClick(android.content.DialogInterface, int)
+		 */
 		@Override
 		public void onClick (DialogInterface dialog, int whichButton)
 		{
@@ -49,6 +51,8 @@ public class GatekeeperActivity extends Activity
 		}
 	}
 
+	// This is here because Crawford doesn't
+	// number the doors in a sane manner
 	private static final int FIRST_DOOR = 4;
 	private static final int LAST_DOOR = 9;
 
@@ -56,13 +60,19 @@ public class GatekeeperActivity extends Activity
 	private SharedPreferences prefs;
 
 	/**
-	 * 
+	 * Start the about view
 	 */
 	public void about (View view)
 	{
 		startActivity(new Intent(this, AboutActivity.class));
 	}
 
+	/**
+	 * 
+	 * @param doorState
+	 *            can be one of unknown, unlocked, or locked
+	 * @return Gray for unlocked, red for unlocked, or green for locked
+	 */
 	private int getColorFromState (String doorState)
 	{
 		int color;
@@ -285,8 +295,6 @@ public class GatekeeperActivity extends Activity
 		findViewById(R.id.about_button).setVisibility(View.VISIBLE);
 		findViewById(R.id.welcome_message).setVisibility(View.VISIBLE);
 		findViewById(R.id.login_button).setVisibility(View.VISIBLE);
-
-		// Maybe bring up a "First time" dialog or some other help here.
 	}
 
 	public void update (String jsonstr)
