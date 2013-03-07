@@ -141,6 +141,7 @@ public class GatekeeperActivity extends Activity
 	{
 		// This is possible because awesomeness
 		prefs.edit().remove("username").remove("password").remove("loggedin").commit();
+		connector = null;
 		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
 		{
 			invalidateOptionsMenu();
