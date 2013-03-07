@@ -1,6 +1,3 @@
-/**
- * 
- */
 package edu.rit.csh.agargiulo.Gatekeeper;
 
 import java.io.BufferedReader;

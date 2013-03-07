@@ -251,6 +251,7 @@ public class GatekeeperActivity extends Activity
 	public void popLock (View view)
 	{
 		((Button) view).setBackgroundColor(Color.parseColor("#FFD280"));
+		((Button) view).setEnabled(false);
 		int doorId;
 		switch(view.getId())
 		{
@@ -287,15 +288,6 @@ public class GatekeeperActivity extends Activity
 			doorId = -1;
 		}
 		connector.popDoor(doorId);
-		try
-		{
-			Thread.sleep(1);
-		} catch(InterruptedException e)
-		{
-			Log.e("InterruptedException", "", e);
-		}
-		connector.getAllDoors();
-
 	}
 
 	private void resetView ()
@@ -311,17 +303,23 @@ public class GatekeeperActivity extends Activity
 		findViewById(R.id.login_button).setVisibility(View.VISIBLE);
 	}
 
-	public void update (String jsonstr, int doorID)
+	public void update (String jsonstr, int door)
 	{
+		// The object generated from jsonstr
 		JSONObject obj;
 		JSONArray response;
+
 		InvalidCredsOnClickListener alertListener;
+
 		int doorId;
 		String doorState, doorName;
+
 		Button tempButton;
+
 		AlertDialog.Builder dialogBuild;
 		AlertDialog dialog;
 		TextView wel_mesg;
+
 		// These will be the values received from the JSON string
 		String responseStr, errorStr, errorTypeStr;
 		boolean success;
@@ -366,7 +364,9 @@ public class GatekeeperActivity extends Activity
 			{
 				if(responseStr.equals("unlocked") || responseStr.equals("locked"))
 				{
-
+					tempButton = (Button) findViewById(getId(door));
+					tempButton.setBackgroundColor(getColorFromState(responseStr));
+					tempButton.setEnabled(true);
 				} else
 				{
 					// all_doors or door_state/id was called
@@ -383,6 +383,9 @@ public class GatekeeperActivity extends Activity
 						if(doorState.equals("unknown"))
 						{
 							tempButton.setEnabled(false);
+						} else
+						{
+							tempButton.setEnabled(true);
 						}
 					}
 					wel_mesg = (TextView) findViewById(R.id.welcome_message);
