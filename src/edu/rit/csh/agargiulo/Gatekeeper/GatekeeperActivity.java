@@ -41,6 +41,7 @@ public class GatekeeperActivity extends Activity
 			switch (whichButton)
 			{
 			case DialogInterface.BUTTON_POSITIVE:
+				resetView();
 				startActivity(new Intent(getApplicationContext(), LoginActivity.class));
 				break;
 			case DialogInterface.BUTTON_NEGATIVE:
@@ -256,7 +257,7 @@ public class GatekeeperActivity extends Activity
 
 	public void popLock (View view)
 	{
-		((Button) view).setBackgroundColor(Color.parseColor("#FFD280"));
+		((Button) view).setBackgroundColor(Color.parseColor("#FF8080"));
 		((Button) view).setEnabled(false);
 		int doorId;
 		switch (view.getId())
