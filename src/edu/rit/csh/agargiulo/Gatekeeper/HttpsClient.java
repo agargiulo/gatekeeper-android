@@ -12,16 +12,13 @@ import java.security.NoSuchAlgorithmException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
 
-import org.apache.http.conn.ClientConnectionManager;
-import org.apache.http.conn.scheme.Scheme;
-import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.scheme.SocketFactory;
 import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.impl.conn.SingleClientConnManager;
 
 import android.content.Context;
 import android.util.Log;
+
+import com.loopj.android.http.AsyncHttpClient;
 
 /**
  * @author Anthony Gargiulo <anthony@agargiulo.com>
@@ -34,7 +31,7 @@ import android.util.Log;
  *         weird.
  * 
  */
-public class HttpsClient extends DefaultHttpClient
+public class HttpsClient extends AsyncHttpClient
 {
 
 	final Context context;
@@ -45,17 +42,7 @@ public class HttpsClient extends DefaultHttpClient
 	public HttpsClient (Context context)
 	{
 		this.context = context;
-	}
-
-	/**
-	 * @return {@link ClientConnectionManager}
-	 */
-	@Override
-	protected ClientConnectionManager createClientConnectionManager ()
-	{
-		SchemeRegistry registry = new SchemeRegistry();
-		registry.register(new Scheme("https", newSSLSocketFactory(), 443));
-		return new SingleClientConnManager(getParams(), registry);
+		setSSLSocketFactory(newSSLSocketFactory());
 	}
 
 	/**
