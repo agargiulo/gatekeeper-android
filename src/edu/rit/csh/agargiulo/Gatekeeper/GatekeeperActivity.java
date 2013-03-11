@@ -359,14 +359,18 @@ public class GatekeeperActivity extends Activity
 				else if (errorTypeStr.equals("denial"))
 				{
 					dialogBuild.setMessage(errorStr);
-					// dialogBuild.setNeutralButton("Okay", alertListener);
+					dialogBuild.setNeutralButton("Okay", alertListener);
 				}
 				else if (errorTypeStr.equals("command"))
 				{
+					dialogBuild.setMessage(errorStr);
+					dialogBuild.setNeutralButton("Okay", alertListener);
 					Log.wtf("gatekeeper update(String jsonstr)",
 							"Invalid command! This should never get run unless Crawford changed the API on me");
 				}
 				dialog = dialogBuild.create();
+				dialog.setCancelable(false);
+				dialog.setCanceledOnTouchOutside(false);
 				dialog.show();
 			}
 			else if (!responseStr.equals("null"))
