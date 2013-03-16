@@ -3,12 +3,17 @@
  */
 package edu.rit.csh.agargiulo.Gatekeeper;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import org.apache.http.client.utils.URIUtils;
+import org.apache.http.message.BasicNameValuePair;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-
-import com.loopj.android.http.RequestParams;
+import android.util.Log;
 
 /**
  * @author Anthony Gargiulo <anthony@agargiulo.com>
@@ -16,12 +21,12 @@ import com.loopj.android.http.RequestParams;
  */
 public class HttpsConnector
 {
-	static protected final String POST_HOST = "https://api.gatekeeper.csh.rit.edu/";
+	static protected final String POST_HOST = "api.gatekeeper.csh.rit.edu";
 	private HttpsClient client;
 	private Context context;
 	private Activity activity;
 	private SharedPreferences prefs;
-	private RequestParams params;
+	private BasicNameValuePair usernameNvp, passwordNvp;
 
 	/**
 	 * 
@@ -43,16 +48,25 @@ public class HttpsConnector
 		prefs = PreferenceManager.getDefaultSharedPreferences(context);
 		username = prefs.getString("username", "");
 		password = prefs.getString("password", "");
-		params = new RequestParams();
-		params.put("username", username);
-		params.put("password", password);
+		usernameNvp = new BasicNameValuePair("username", username);
+		passwordNvp = new BasicNameValuePair("password", password);
+
 	}
 
-	private String createUrl (String path)
+	private URI createUrl (String path)
 	{
-		String postUrl;
-		postUrl = POST_HOST + path;
-		return postUrl;
+		URI postUri;
+		try
+		{
+			postUri = URIUtils.createURI("https", POST_HOST, 0, path, null, null);
+		}
+		catch (URISyntaxException e)
+		{
+			Log.e(this.getClass().toString() + "URISyntaxException", e.getMessage(), e);
+			postUri = null;
+		}
+		return postUri;
+
 	}
 
 	/**
@@ -60,8 +74,9 @@ public class HttpsConnector
 	 */
 	public void getAllDoors ()
 	{
-		String doorsUrl = createUrl("all_doors");
-		client.post(context, doorsUrl, params, new HttpsPostAsyncTask(activity, -1));
+		URI doorsUrl = createUrl("all_doors");
+		BasicNameValuePair urlNvp = new BasicNameValuePair("url", doorsUrl.toString());
+		new HttpsPostAsyncTask(client, activity, -1).execute(urlNvp, usernameNvp, passwordNvp);
 	}
 
 	/**
@@ -69,8 +84,9 @@ public class HttpsConnector
 	 */
 	public void getDoorState (int doorId)
 	{
-		String stateUrl = createUrl("door_state/" + doorId);
-		client.post(context, stateUrl, params, new HttpsPostAsyncTask(activity, doorId));
+		URI stateUrl = createUrl("door_state/" + doorId);
+		BasicNameValuePair urlNvp = new BasicNameValuePair("url", stateUrl.toString());
+		new HttpsPostAsyncTask(client, activity, doorId).execute(urlNvp, usernameNvp, passwordNvp);
 	}
 
 	/**
@@ -78,8 +94,9 @@ public class HttpsConnector
 	 */
 	public void lockDoor (int doorId)
 	{
-		String lockUrl = createUrl("lock/" + doorId);
-		client.post(context, lockUrl, params, new HttpsPostAsyncTask(activity, doorId));
+		URI lockUrl = createUrl("lock/" + doorId);
+		BasicNameValuePair urlNvp = new BasicNameValuePair("url", lockUrl.toString());
+		new HttpsPostAsyncTask(client, activity, doorId).execute(urlNvp, usernameNvp, passwordNvp);
 	}
 
 	/**
@@ -87,8 +104,9 @@ public class HttpsConnector
 	 */
 	public void popDoor (int doorId)
 	{
-		String popUrl = createUrl("pop/" + doorId);
-		client.post(context, popUrl, params, new HttpsPostAsyncTask(activity, doorId));
+		URI popUrl = createUrl("pop/" + doorId);
+		BasicNameValuePair urlNvp = new BasicNameValuePair("url", popUrl.toString());
+		new HttpsPostAsyncTask(client, activity, doorId).execute(urlNvp, usernameNvp, passwordNvp);
 	}
 
 	/**
@@ -96,7 +114,8 @@ public class HttpsConnector
 	 */
 	public void unlockDoor (int doorId)
 	{
-		String unlockUrl = createUrl("unlock/" + doorId);
-		client.post(context, unlockUrl, params, new HttpsPostAsyncTask(activity, doorId));
+		URI unlockUrl = createUrl("unlock/" + doorId);
+		BasicNameValuePair urlNvp = new BasicNameValuePair("url", unlockUrl.toString());
+		new HttpsPostAsyncTask(client, activity, doorId).execute(urlNvp, usernameNvp, passwordNvp);
 	}
 }
