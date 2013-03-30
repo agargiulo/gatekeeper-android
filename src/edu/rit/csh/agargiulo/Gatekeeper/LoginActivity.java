@@ -89,8 +89,9 @@ public class LoginActivity extends Activity
 			// mUsername);
 
 			if (PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit()
-					.putString("username", mUsername).putString("password", mPassword)
-					.putBoolean("loggedin", true).commit() == false)
+					.putString(Gatekeeper.PREF_USERNAME, mUsername)
+					.putString(Gatekeeper.PREF_PASSWORD, mPassword)
+					.putBoolean(Gatekeeper.PREF_LOGGEDIN, true).commit() == false)
 			{
 				Log.e("attempt login", "Commit failed, bro.");
 			}

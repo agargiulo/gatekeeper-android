@@ -78,20 +78,20 @@ public class GatekeeperActivity extends Activity
 	private int getColorFromState (String doorState)
 	{
 		int color;
-		if (doorState.equals("unknown"))
+		if (doorState.equals(Gatekeeper.D_STATE_UNKNOWN))
 		{
 			// #DDDDDD = Gray
-			color = Color.parseColor("#DDDDDD");
+			color = Color.parseColor(Gatekeeper.COLOR_GRAY);
 		}
-		else if (doorState.equals("unlocked"))
+		else if (doorState.equals(Gatekeeper.D_STATE_UNLOCKED))
 		{
 			// #FF8080 = The red used on the web app
-			color = Color.parseColor("#FF8080");
+			color = Color.parseColor(Gatekeeper.COLOR_RED);
 		}
-		else if (doorState.equals("locked"))
+		else if (doorState.equals(Gatekeeper.D_STATE_LOCKED))
 		{
 			// #80c080 = The green used on the web app
-			color = Color.parseColor("#80c080");
+			color = Color.parseColor(Gatekeeper.COLOR_GREEN);
 		}
 		else
 		{
@@ -144,8 +144,8 @@ public class GatekeeperActivity extends Activity
 	 */
 	private void logout ()
 	{
-		// This is possible because awesomeness
-		prefs.edit().remove("username").remove("password").remove("loggedin").commit();
+		prefs.edit().remove(Gatekeeper.PREF_USERNAME).remove(Gatekeeper.PREF_PASSWORD);
+		prefs.edit().remove(Gatekeeper.PREF_LOGGEDIN).commit();
 		connector = null;
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
 		{
@@ -240,16 +240,14 @@ public class GatekeeperActivity extends Activity
 	public boolean onPrepareOptionsMenu (Menu menu)
 	{
 		boolean result = super.onPrepareOptionsMenu(menu);
-		if (prefs.getBoolean("loggedin", false))
+		if (prefs.getBoolean(Gatekeeper.PREF_LOGGEDIN, false))
 		{
-			menu.findItem(R.id.menu_login).setVisible(false);
 			menu.findItem(R.id.menu_logout).setVisible(true);
 			menu.findItem(R.id.menu_about).setVisible(true);
 		}
 		else
 		{
 			menu.findItem(R.id.menu_logout).setVisible(false);
-			menu.findItem(R.id.menu_login).setVisible(false);
 			menu.findItem(R.id.menu_about).setVisible(false);
 		}
 		return result;
@@ -257,7 +255,7 @@ public class GatekeeperActivity extends Activity
 
 	public void popLock (View view)
 	{
-		((Button) view).setBackgroundColor(Color.parseColor("#FF8080"));
+		((Button) view).setBackgroundColor(Color.parseColor(Gatekeeper.COLOR_RED));
 		((Button) view).setEnabled(false);
 		int doorId;
 		switch (view.getId())
@@ -338,10 +336,10 @@ public class GatekeeperActivity extends Activity
 			/*
 			 * initialize these here to make life SO much better later on
 			 */
-			success = Boolean.valueOf(obj.getString("success"));
-			responseStr = obj.getString("response");
-			errorStr = obj.getString("error");
-			errorTypeStr = obj.getString("error_type");
+			success = Boolean.valueOf(obj.getString(Gatekeeper.JSON_SUCCESS));
+			responseStr = obj.getString(Gatekeeper.JSON_RESPONSE);
+			errorStr = obj.getString(Gatekeeper.JSON_ERROR);
+			errorTypeStr = obj.getString(Gatekeeper.JSON_ERROR_TYPE);
 
 			if (!success)
 			{
@@ -351,18 +349,18 @@ public class GatekeeperActivity extends Activity
 				alertListener = new InvalidCredsOnClickListener();
 				dialogBuild = new AlertDialog.Builder(this);
 				dialogBuild.setTitle(errorTypeStr);
-				if (errorTypeStr.equals("login"))
+				if (errorTypeStr.equals(Gatekeeper.JSON_ERROR_LOGIN))
 				{
 					dialogBuild.setMessage(errorStr + "\nGo to the log in screen?");
 					dialogBuild.setPositiveButton("Yes, please!", alertListener);
 					dialogBuild.setNegativeButton("Clear invalid credentials", alertListener);
 				}
-				else if (errorTypeStr.equals("denial"))
+				else if (errorTypeStr.equals(Gatekeeper.JSON_ERROR_DENIAL))
 				{
 					dialogBuild.setMessage(errorStr);
 					dialogBuild.setNeutralButton("Okay", alertListener);
 				}
-				else if (errorTypeStr.equals("command"))
+				else if (errorTypeStr.equals(Gatekeeper.JSON_ERROR_COMMAND))
 				{
 					dialogBuild.setMessage(errorStr);
 					dialogBuild.setNeutralButton("Okay", alertListener);
@@ -374,9 +372,10 @@ public class GatekeeperActivity extends Activity
 				dialog.setCanceledOnTouchOutside(false);
 				dialog.show();
 			}
-			else if (!responseStr.equals("null"))
+			else if (!responseStr.equals(Gatekeeper.JSON_RESPONSE_NULL))
 			{
-				if (responseStr.equals("unlocked") || responseStr.equals("locked"))
+				if (responseStr.equals(Gatekeeper.D_STATE_UNLOCKED)
+						|| responseStr.equals(Gatekeeper.D_STATE_LOCKED))
 				{
 					tempButton = (Button) findViewById(getId(door));
 					tempButton.setBackgroundColor(getColorFromState(responseStr));
@@ -388,14 +387,15 @@ public class GatekeeperActivity extends Activity
 					response = new JSONArray(responseStr);
 					for (int i = 0; i < response.length(); i++ )
 					{
-						doorState = response.getJSONObject(i).getString("state");
-						doorId = response.getJSONObject(i).getInt("id");
-						doorName = response.getJSONObject(i).getString("name");
+						doorState = response.getJSONObject(i).getString(
+								Gatekeeper.JSON_RESPONSE_STATE);
+						doorId = response.getJSONObject(i).getInt(Gatekeeper.JSON_RESPONSE_ID);
+						doorName = response.getJSONObject(i).getString(
+								Gatekeeper.JSON_RESPONSE_NAME);
 						tempButton = (Button) findViewById(getId(doorId));
-						tempButton.setText(doorName + ":" + doorState);
+						tempButton.setText(doorName + " : " + doorState);
 						tempButton.setBackgroundColor(getColorFromState(doorState));
-						tempButton.setVisibility(View.VISIBLE);
-						if (doorState.equals("unknown"))
+						if (doorState.equals(Gatekeeper.D_STATE_UNKNOWN))
 						{
 							tempButton.setEnabled(false);
 						}
