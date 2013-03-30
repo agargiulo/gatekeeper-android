@@ -223,6 +223,17 @@ public class GatekeeperActivity extends Activity
 		String responseStr, errorStr, errorTypeStr;
 		boolean success;
 
+		if (jsonstr == null)
+		{
+			// This is a big issue, but please don't crash the app over it.
+			dialogBuild = new AlertDialog.Builder(this);
+			dialogBuild.setTitle("ERROR ERROR ERROR!!!1!!!One!!");
+			dialogBuild.setMessage("Error talking to Gatekeeper");
+			dialog = dialogBuild.create();
+			dialog.show();
+			return;
+		}
+
 		try
 		{
 			obj = new JSONObject(jsonstr);
