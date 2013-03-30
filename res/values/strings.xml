@@ -10,5 +10,4 @@
     <string name="title_activity_about">About Android Gatekeeper</string>
     <string name="about_text">A mobile interface for CSH\'s Gatekeeper door lock system\nWritten By Anthony Gargiulo \u00A9 2013 \nLicensed under MIT License\nhttp://opensource.org/licenses/MIT</string>
     <string name="welcome_message">Welcome to the Gatekeeper Android app!\nPress the login button below to get started.</string>
-
 </resources>

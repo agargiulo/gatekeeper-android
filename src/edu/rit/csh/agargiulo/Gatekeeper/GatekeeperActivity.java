@@ -4,14 +4,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -19,14 +17,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 /**
  * This is the class for the Main Activity of the Gatekeeper App
  * 
  * @author Anthony Gargiulo <anthony@agargiulo.com>
  */
-@SuppressLint("NewApi")
 public class GatekeeperActivity extends Activity
 {
 	class InvalidCredsOnClickListener implements DialogInterface.OnClickListener
@@ -41,7 +37,6 @@ public class GatekeeperActivity extends Activity
 			switch (whichButton)
 			{
 			case DialogInterface.BUTTON_POSITIVE:
-				resetView();
 				startActivity(new Intent(getApplicationContext(), LoginActivity.class));
 				break;
 			case DialogInterface.BUTTON_NEGATIVE:
@@ -53,21 +48,8 @@ public class GatekeeperActivity extends Activity
 		}
 	}
 
-	// This is here because Crawford doesn't
-	// number the doors in a sane manner
-	private static final int FIRST_DOOR = 4;
-	private static final int LAST_DOOR = 9;
-
 	private HttpsConnector connector;
 	private SharedPreferences prefs;
-
-	/**
-	 * Start the about view
-	 */
-	public void about (View view)
-	{
-		startActivity(new Intent(this, AboutActivity.class));
-	}
 
 	/**
 	 * 
@@ -104,14 +86,6 @@ public class GatekeeperActivity extends Activity
 	{
 		switch (doorId)
 		{
-		/*
-		case 1:
-			return R.id.door_1;
-		case 2:
-			return R.id.door_2;
-		case 3:
-			return R.id.door_3;
-			*/
 		case 4:
 			return R.id.door_4;
 		case 5:
@@ -130,15 +104,6 @@ public class GatekeeperActivity extends Activity
 	}
 
 	/**
-	 * 
-	 * 
-	 */
-	public void login (View view)
-	{
-		startActivityForResult(new Intent(this, LoginActivity.class), 0);
-	}
-
-	/**
 	 * Deletes the stored username and password from the preferences effectivly
 	 * logging out of the app
 	 */
@@ -147,39 +112,7 @@ public class GatekeeperActivity extends Activity
 		prefs.edit().remove(Gatekeeper.PREF_USERNAME).remove(Gatekeeper.PREF_PASSWORD);
 		prefs.edit().remove(Gatekeeper.PREF_LOGGEDIN).commit();
 		connector = null;
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-		{
-			invalidateOptionsMenu();
-		}
-		// Log.d("logout", "logged out user");
-		resetView();
-
-	}
-
-	@Override
-	protected void onActivityResult (int requestCode, int resultCode, Intent data)
-	{
-		SharedPreferences prefs = PreferenceManager
-				.getDefaultSharedPreferences(getApplicationContext());
-		String username = prefs.getString("username", "");
-		if (username == "")
-		{
-			Log.e("Gatekeeper", "LoginActivity.onActivityResults: Invalid username");
-			prefs.edit().remove("loggedin").commit();
-		}
-		else
-		{
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-			{
-				invalidateOptionsMenu();
-			}
-			// Log.d("gatekeeper", username);
-			if (connector == null)
-			{
-				connector = new HttpsConnector(this);
-			}
-			connector.getAllDoors();
-		}
+		finish();
 
 	}
 
@@ -190,21 +123,11 @@ public class GatekeeperActivity extends Activity
 		setContentView(R.layout.activity_main);
 
 		prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-		if (!prefs.getBoolean("loggedin", false))
+		if (connector == null)
 		{
-			// User is not logged in
-			// show Welcome message and the login/about buttons
-			resetView();
+			connector = new HttpsConnector(this);
 		}
-		else
-		{
-			// User was already logged in, get ALL of the doors!
-			if (connector == null)
-			{
-				connector = new HttpsConnector(this);
-			}
-			connector.getAllDoors();
-		}
+		connector.getAllDoors();
 	}
 
 	@Override
@@ -220,10 +143,6 @@ public class GatekeeperActivity extends Activity
 	{
 		switch (item.getItemId())
 		{
-		case R.id.menu_login:
-			// login();
-			startActivityForResult(new Intent(this, LoginActivity.class), 0);
-			return true;
 		case R.id.menu_logout:
 			logout();
 			return true;
@@ -260,17 +179,6 @@ public class GatekeeperActivity extends Activity
 		int doorId;
 		switch (view.getId())
 		{
-		/*
-		case R.id.door_1:
-			doorId = 1;
-			break;
-		case R.id.door_2:
-			doorId = 2;
-			break;
-		case R.id.door_3:
-			doorId = 3;
-			break;
-		*/
 		case R.id.door_4:
 			doorId = 4;
 			break;
@@ -295,19 +203,6 @@ public class GatekeeperActivity extends Activity
 		connector.popDoor(doorId);
 	}
 
-	private void resetView ()
-	{
-		Button tempButton;
-		for (int i = FIRST_DOOR; i <= LAST_DOOR; i++ )
-		{
-			tempButton = (Button) findViewById(getId(i));
-			tempButton.setVisibility(View.GONE);
-		}
-		findViewById(R.id.about_button).setVisibility(View.VISIBLE);
-		findViewById(R.id.welcome_message).setVisibility(View.VISIBLE);
-		findViewById(R.id.login_button).setVisibility(View.VISIBLE);
-	}
-
 	public void update (String jsonstr, int door)
 	{
 		// The object generated from jsonstr
@@ -323,7 +218,6 @@ public class GatekeeperActivity extends Activity
 
 		AlertDialog.Builder dialogBuild;
 		AlertDialog dialog;
-		TextView wel_mesg;
 
 		// These will be the values received from the JSON string
 		String responseStr, errorStr, errorTypeStr;
@@ -404,12 +298,6 @@ public class GatekeeperActivity extends Activity
 							tempButton.setEnabled(true);
 						}
 					}
-					wel_mesg = (TextView) findViewById(R.id.welcome_message);
-					wel_mesg.setVisibility(View.GONE);
-					tempButton = (Button) findViewById(R.id.about_button);
-					tempButton.setVisibility(View.GONE);
-					tempButton = (Button) findViewById(R.id.login_button);
-					tempButton.setVisibility(View.GONE);
 				}
 			}
 
