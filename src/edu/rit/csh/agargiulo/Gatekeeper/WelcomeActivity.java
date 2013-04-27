@@ -42,6 +42,7 @@ public class WelcomeActivity extends Activity
 		else
 		{
 			startActivity(new Intent(getApplicationContext(), GatekeeperActivity.class));
+			finish();
 		}
 	}
 
@@ -55,11 +56,15 @@ public class WelcomeActivity extends Activity
 		{
 			// User is already logged in, start the next activity
 			startActivity(new Intent(getApplicationContext(), GatekeeperActivity.class));
+			finish();
 		}
-		else
-		{
-			setContentView(R.layout.activity_welcome);
-		}
+	}
+
+	@Override
+	protected void onResume ()
+	{
+		super.onResume();
+		setContentView(R.layout.activity_welcome);
 	}
 
 }

@@ -38,6 +38,7 @@ public class GatekeeperActivity extends Activity
 			{
 			case DialogInterface.BUTTON_POSITIVE:
 				startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+				finish();
 				break;
 			case DialogInterface.BUTTON_NEGATIVE:
 				logout();
@@ -112,6 +113,7 @@ public class GatekeeperActivity extends Activity
 		prefs.edit().remove(Gatekeeper.PREF_USERNAME).remove(Gatekeeper.PREF_PASSWORD);
 		prefs.edit().remove(Gatekeeper.PREF_LOGGEDIN).commit();
 		connector = null;
+		startActivity(new Intent(this, WelcomeActivity.class));
 		finish();
 
 	}
