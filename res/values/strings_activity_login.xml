@@ -6,5 +6,6 @@
     <string name="action_sign_in">Log in</string>
     <string name="login_progress_signing_in">Logging in&#8230;</string>
     <string name="error_field_required">This field is required</string>
+    <string name="login_toast_prefix">Logged in as user :\u0020</string>
 
 </resources>

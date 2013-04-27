@@ -95,7 +95,8 @@ public class LoginActivity extends Activity
 			{
 				Log.e("attempt login", "Commit failed, bro.");
 			}
-			Toast.makeText(getApplicationContext(), "Logged in as user: " + mUsername,
+			Toast.makeText(getApplicationContext(),
+					getResources().getString(R.string.login_toast_prefix) + mUsername,
 					Toast.LENGTH_SHORT).show();
 			showProgress(false);
 			this.finish();
