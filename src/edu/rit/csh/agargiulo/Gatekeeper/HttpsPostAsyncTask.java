@@ -69,7 +69,15 @@ public class HttpsPostAsyncTask extends AsyncTask<BasicNameValuePair, Integer, S
 
 			request.setEntity(getPostEntity(copyOfRange(args, 1, args.length)));
 
-			response = gatekeeperClient.execute(request);
+			try
+			{
+				response = gatekeeperClient.execute(request);
+			}
+			catch (Exception ise)
+			{
+				Log.wtf("CSH-Gatekeeper", "This should not happen...I'm confused.", ise);
+				return null;
+			}
 			bufReader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 
 			while ( (line = bufReader.readLine()) != null)
