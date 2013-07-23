@@ -10,7 +10,7 @@ before_install:
   - echo y | android update sdk --filter android-10,android-17,build-tools-17.0.0,platform-tools --force --no-ui
   - echo $ANDROID_HOME
   - echo $PATH
-  - ls -r
+  - ls -R
   - android update project -p . --subprojects -t android-17 -n GatekeeperAndroid
 
 script: ant debug
