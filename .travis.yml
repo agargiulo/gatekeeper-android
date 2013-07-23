@@ -18,5 +18,8 @@ notifications:
   recipients:
     anthony+travisci@agargiulo.com
 
-  on_success: change
-  on_failure: change
+  irc:
+    channels:
+    - "skynet.csh.rit.edu#freshmen"
+    template:
+    - "%{repository}#%{build_number}: %{author}: %{branch}: %{message}"
