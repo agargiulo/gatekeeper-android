@@ -10,7 +10,15 @@ before_install:
   - echo y | android update sdk --filter android-10,android-17,build-tools-17.0.0,platform-tools --force --no-ui
   - echo $ANDROID_HOME
   - echo $PATH
-  - ls -R
+  - ls -l android-sdk-linux/build-tools/17.0.0/aapt
+  - ls -l android-sdk-linux/platform-tools/adb
   - android update project -p . --subprojects -t android-17 -n GatekeeperAndroid
 
 script: ant debug
+
+notifications:
+  recipients:
+    anthony+travisci@agargiulo.com
+
+  on_success: change
+  on_failure: change
