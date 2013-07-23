@@ -7,4 +7,4 @@ before_install:
   - export ANDROID_HOME=`pwd`/android-sdk-linux
   - export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
   - echo y | android update sdk --filter android-10,android-17,build-tools-17.0.0,platform-tools --force --no-ui
-  - android update project -p . --subprojects -t 17 -n GatekeeperAndroid
+  - android update project -p . --subprojects -t android-17 -n GatekeeperAndroid
