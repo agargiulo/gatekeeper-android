@@ -7,6 +7,7 @@ env:
   matrix:
     - ANDROID_SDK=android-10
     - ANDROID_SDK=android-17
+    - ANDROID_SDK=android-18
 
 before_install:
   # download the latest android sdk and unzip
