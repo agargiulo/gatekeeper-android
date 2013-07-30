@@ -1,6 +1,11 @@
 language: java
 jdk: oraclejdk7
 
+env:
+  matrix:
+    - ANDROID_SDK=android-10
+    - ANDROID_SDK=android-17
+
 before_install:
   # download the latest android sdk and unzip
   - sudo apt-get update -qq
@@ -9,8 +14,8 @@ before_install:
   - tar -zxf android-sdk.tgz
   - export ANDROID_HOME=`pwd`/android-sdk-linux
   - export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
-  - echo y | android update sdk --filter android-10,android-17,build-tools-17.0.0,platform-tools --force --no-ui
-  - android update project -p . --subprojects -t android-17 -n GatekeeperAndroid
+  - echo y | android update sdk --filter ${ANDROID_SDK},build-tools-17.0.0,platform-tools --force --no-ui
+  - android update project -p . --subprojects -t ${ANDROID_SDK} -n GatekeeperAndroid
 
 script: ant debug
 
