@@ -17,7 +17,7 @@ before_install:
   - tar -zxf android-sdk.tgz
   - export ANDROID_HOME=`pwd`/android-sdk-linux
   - export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
-  - echo y | android update sdk --filter ${ANDROID_SDK},${ANDROID-BUILD-TOOLS},platform-tools --force --no-ui
+  - echo y | android update sdk --filter ${ANDROID_SDK},${ANDROID_BUILD_TOOLS},platform-tools --force --no-ui
   - android update project -p . --subprojects -t ${ANDROID_SDK} -n GatekeeperAndroid
 
 script: ant debug
