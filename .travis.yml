@@ -2,7 +2,8 @@ language: java
 jdk: oraclejdk7
 
 env:
-  ANDROID_BUILD_TOOLS=build-tools-18.0.1
+  global:
+    - ANDROID_BUILD_TOOLS=build-tools-18.0.1
   matrix:
     - ANDROID_SDK=android-10
     - ANDROID_SDK=android-17
