@@ -5,7 +5,7 @@ env:
   global:
     - ANDROID_BUILD_TOOLS=build-tools-18.0.1
   matrix:
-    - ANDROID_SDK=android-10,android-17 ANDROID_TARGET=android-10
+    - ANDROID_SDK=android-10,android-17,android-18 ANDROID_TARGET=android-10
     - ANDROID_SDK=android-17 ANDROID_TARGET=android-17
     - ANDROID_SDK=android-18 ANDROID_TARGET=android-18
 
