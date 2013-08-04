@@ -14,7 +14,7 @@ env:
 before_install:
   # download the latest android sdk and unzip
   - sudo apt-get update -qq
-  - if [ "`uname -m`" = "x86_64" ]; then sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch; fi
+  - if [ "`uname -m`" = "x86_64" ]; then sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch zsh; fi
   - wget "http://dl.google.com/android/android-sdk_r22.0.4-linux.tgz" -O android-sdk.tgz
   - tar -zxf android-sdk.tgz
   - export ANDROID_HOME=`pwd`/android-sdk-linux
