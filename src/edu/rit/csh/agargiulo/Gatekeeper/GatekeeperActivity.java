@@ -274,6 +274,13 @@ public class GatekeeperActivity extends Activity
 					Log.wtf("gatekeeper update(String jsonstr)",
 							"Invalid command! This should never get run unless Crawford changed the API on me");
 				}
+				else
+				{
+					dialogBuild.setMessage(errorStr);
+					dialogBuild.setNeutralButton("Okay", alertListener);
+					Log.e("gatekeeper update(String jsonstr)",
+							"Gatekeeper server returned error message: " + errorStr);
+				}
 				dialog = dialogBuild.create();
 				dialog.setCancelable(false);
 				dialog.setCanceledOnTouchOutside(false);
