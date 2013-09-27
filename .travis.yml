@@ -3,7 +3,7 @@ jdk: oraclejdk7
 
 env:
   global:
-    - ANDROID_BUILD_TOOLS=build-tools-18.1
+    - ANDROID_BUILD_TOOLS=build-tools-18.1.0
   matrix:
     - ANDROID_SDK=android-10,android-17,android-18 ANDROID_TARGET="android-18 android-17 android-10"
     - ANDROID_SDK=android-17 ANDROID_TARGET=android-17
