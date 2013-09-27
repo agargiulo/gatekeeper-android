@@ -1,7 +1,7 @@
 gatekeeper-android
 ==================
 
-Android Application to connect to CSH's Gatekeeper software
+Android Application to connect to CSH's [Gatekeeper software](https://github.com/crawford/gatekeeper)
 
 Author
 ------
