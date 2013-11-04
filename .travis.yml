@@ -28,6 +28,6 @@ notifications:
 
   irc:
     channels:
-    - "skynet.csh.rit.edu#freshmen"
+    - "skynet.csh.rit.edu#usercenter"
     template:
     - "%{repository}#%{build_number}: %{author}: %{branch}: %{message}"
