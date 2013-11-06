@@ -18,6 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 /**
  * This is the class for the Main Activity of the Gatekeeper App
  * 
@@ -174,6 +176,20 @@ public class GatekeeperActivity extends Activity
 		return result;
 	}
 
+	@Override
+	public void onStart ()
+	{
+		super.onStart();
+		EasyTracker.getInstance().activityStart(this);
+	}
+
+	@Override
+	public void onStop ()
+	{
+		super.onStop();
+		EasyTracker.getInstance().activityStop(this);
+	}
+
 	public void popLock (View view)
 	{
 		((Button) view).setBackgroundColor(Color.parseColor(Gatekeeper.COLOR_RED));
@@ -327,4 +343,5 @@ public class GatekeeperActivity extends Activity
 			Log.e("JSON Errors " + this.getClass().toString(), je.getMessage(), je);
 		}
 	}
+
 }

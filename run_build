@@ -1,6 +1,8 @@
 #!/bin/zsh4
 for and_target in `print -l ${ANDROID_TARGET} `;do
+	echo "============"
 	echo ${and_target}
+	echo "------------"
 	android update project -p . --subprojects -t ${and_target} -n GatekeeperAndroid
 	ant debug
 done

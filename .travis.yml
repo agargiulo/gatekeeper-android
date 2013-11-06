@@ -3,21 +3,21 @@ jdk: oraclejdk7
 
 env:
   global:
-    - ANDROID_BUILD_TOOLS=build-tools-18.1.0
+    - ANDROID_BUILD_TOOLS=build-tools-19.0.0
   matrix:
-    - ANDROID_SDK=android-10,android-17,android-18 ANDROID_TARGET="android-18 android-17 android-10"
     - ANDROID_SDK=android-17 ANDROID_TARGET=android-17
     - ANDROID_SDK=android-18 ANDROID_TARGET=android-18
+    - ANDROID_SDK=android-19 ANDROID_TARGET=android-19
 
 before_install:
   # download the latest android sdk and unzip
   - sudo apt-get update -qq
   - if [ "`uname -m`" = "x86_64" ]; then sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch zsh; fi
-  - wget "http://dl.google.com/android/android-sdk_r22.0.4-linux.tgz" -O android-sdk.tgz
+  - wget "http://dl.google.com/android/android-sdk_r22.3-linux.tgz" -O android-sdk.tgz
   - tar -zxf android-sdk.tgz
   - export ANDROID_HOME=`pwd`/android-sdk-linux
   - export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
-  - echo y | android update sdk --filter ${ANDROID_SDK},${ANDROID_BUILD_TOOLS},platform-tools --force --no-ui
+  - echo y | android update sdk --filter ${ANDROID_SDK},${ANDROID_BUILD_TOOLS},platform-tools,extra-google-analytics_sdk_v2 --force --no-ui
 
 script: ./run_build
 
@@ -27,6 +27,6 @@ notifications:
 
   irc:
     channels:
-    - "skynet.csh.rit.edu#freshmen"
+    - "skynet.csh.rit.edu#usercenter"
     template:
     - "%{repository}#%{build_number}: %{author}: %{branch}: %{message}"

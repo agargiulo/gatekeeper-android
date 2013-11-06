@@ -8,6 +8,8 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 
+import com.google.analytics.tracking.android.EasyTracker;
+
 public class WelcomeActivity extends Activity
 {
 	private SharedPreferences prefs;
@@ -65,6 +67,20 @@ public class WelcomeActivity extends Activity
 	{
 		super.onResume();
 		setContentView(R.layout.activity_welcome);
+	}
+
+	@Override
+	public void onStart ()
+	{
+		super.onStart();
+		EasyTracker.getInstance().activityStart(this);
+	}
+
+	@Override
+	public void onStop ()
+	{
+		super.onStop();
+		EasyTracker.getInstance().activityStop(this);
 	}
 
 }
