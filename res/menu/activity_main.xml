@@ -16,5 +16,14 @@
         android:title="@string/menu_about"
         android:visible="true">
     </item>
+    <item
+        android:id="@+id/menu_reload_doors"
+        android:checkable="false"
+        android:enabled="true"
+        android:icon="@drawable/ic_menu_reload"
+        android:showAsAction="ifRoom"
+        android:title="@string/menu_reload"
+        android:visible="true">
+    </item>
 
 </menu>
