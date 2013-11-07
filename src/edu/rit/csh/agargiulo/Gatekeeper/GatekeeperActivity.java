@@ -153,6 +153,8 @@ public class GatekeeperActivity extends Activity
 		case R.id.menu_about:
 			startActivity(new Intent(this, AboutActivity.class));
 			return true;
+		case R.id.menu_reload_doors:
+			connector.getAllDoors();
 		default:
 			return super.onOptionsItemSelected(item);
 
