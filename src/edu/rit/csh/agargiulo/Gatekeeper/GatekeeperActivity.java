@@ -325,6 +325,12 @@ public class GatekeeperActivity extends Activity
 						doorName = response.getJSONObject(i).getString(
 								Gatekeeper.JSON_RESPONSE_NAME);
 						tempButton = (Button) findViewById(getId(doorId));
+						if (tempButton == null)
+						{
+							Log.e("gatekeeper update()", "Gatekeeper server returned a door ("
+									+ doorName + ") I don't know about");
+							return;
+						}
 						tempButton.setText(doorName + " : " + doorState);
 						tempButton.setBackgroundColor(getColorFromState(doorState));
 						if (doorState.equals(Gatekeeper.D_STATE_UNKNOWN))
