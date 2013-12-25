@@ -18,6 +18,12 @@
 
   </head>
   <body>
+<?
+if ($_SERVER['SERVER_NAME'] == "www.agargiulo.com")
+{
+	include_once("analyticstracking.php");
+}
+?>
       <div id="header">
         <nav>
           <li class="fork"><a href="https://github.com/agargiulo/gatekeeper-android">View On GitHub</a></li>
@@ -35,7 +41,7 @@
           <p>Android Application to connect to CSH's <a href="https://github.com/crawford/gatekeeper">Gatekeeper software</a></p>
           <hr>
           <span class="credits left">Project maintained by <a href="https://github.com/agargiulo">agargiulo</a></span>
-          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+          <span class="credits right">Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
         </div>
 
         <h2>
