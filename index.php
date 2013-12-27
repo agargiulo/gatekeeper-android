@@ -52,7 +52,7 @@ if ($_SERVER['SERVER_NAME'] == "www.agargiulo.com")
 <h2>
 <a name="screenshots" class="anchor" href="#screenshots"><span class="octicon octicon-link"></span></a>Screenshots</h2>
 
-<p><img src="https://fi.agarg.me/i/gka/welcome_screen_small.png" alt="Welcome Screen (Phone)"><img src="https://fi.agarg.me/i/gka/welcome_about_small.png" alt="About (Phone)"><img src="https://fi.agarg.me/i/gka/login_screen_small.png" alt="Login Screen (Phone)"><img src="https://fi.agarg.me/i/gka/main_screen_small.png" alt="Main Screen (Phone)"><img src="https://fi.agarg.me/i/gka/thinking_small.png" alt="Thinking (Phone)"></p>
+<p><a href="https://fi.agarg.me/i/gka/welcome_screen.png"><img src="https://fi.agarg.me/i/gka/welcome_screen_small.png" alt="Welcome Screen (Phone)"></a><a href="https://fi.agarg.me/i/gka/welcome_about.png"><img src="https://fi.agarg.me/i/gka/welcome_about_small.png" alt="About (Phone)"></a> <a href="https://fi.agarg.me/i/gka/login_screen.png"><img src="https://fi.agarg.me/i/gka/login_screen_small.png" alt="Login Screen (Phone)"></a> <a href="https://fi.agarg.me/i/gka/main_screen.png"><img src="https://fi.agarg.me/i/gka/main_screen_small.png" alt="Main Screen (Phone)"></a> <a href="https://fi.agarg.me/i/gka/thinking.png"><img src="https://fi.agarg.me/i/gka/thinking_small.png" alt="Thinking (Phone)"></a></p>
 
 <h2>
 <a name="author" class="anchor" href="#author"><span class="octicon octicon-link"></span></a>Author</h2>
