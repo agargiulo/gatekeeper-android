@@ -24,15 +24,7 @@ if ($_SERVER['SERVER_NAME'] == "www.agargiulo.com")
 	include_once("analyticstracking.php");
 }
 ?>
-      <div id="header">
-        <nav>
-          <li class="fork"><a href="https://github.com/agargiulo/gatekeeper-android">View On GitHub</a></li>
-          <li class="downloads"><a href="https://github.com/agargiulo/gatekeeper-android/zipball/master">ZIP</a></li>
-          <li class="downloads"><a href="https://github.com/agargiulo/gatekeeper-android/tarball/master">TAR</a></li>
-          <li class="title">DOWNLOADS</li>
-        </nav>
-      </div><!-- end header -->
-
+<a href="https://github.com/agargiulo/gatekeeper-android"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub"></a>
     <div class="wrapper">
 
       <section>
